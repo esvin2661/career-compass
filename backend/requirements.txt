@@ -12,6 +12,7 @@ langchain-core==0.2.1
 langchain-community==0.2.1
 
 # Optional LLM backends (uncomment the one you need):
+langchain-google-genai==1.0.3    # Google Gemini
 # langchain-openai==0.1.8        # OpenAI / Azure OpenAI
 # huggingface-hub==0.23.2        # HuggingFace Inference API
 

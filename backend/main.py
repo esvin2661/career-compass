@@ -34,9 +34,9 @@ from utils import (
 )
 
 # persistent storage
-from . import db
+import db
 # text extraction
-from .text_extraction import extract_text_from_file
+from text_extraction import extract_text_from_file
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -70,6 +70,19 @@ def _build_llm():
             return llm
         except Exception as e:
             logger.warning(f"HuggingFace LLM init failed: {e}")
+
+    elif backend == "gemini":
+        try:
+            from langchain_google_genai import ChatGoogleGenerativeAI
+            llm = ChatGoogleGenerativeAI(
+                model=os.getenv("GEMINI_MODEL", "gemini-1.5-pro"),
+                google_api_key=os.getenv("GEMINI_API_KEY"),
+                temperature=0.5,
+            )
+            logger.info("LLM: Google Gemini ChatGoogleGenerativeAI")
+            return llm
+        except Exception as e:
+            logger.warning(f"Google Gemini LLM init failed: {e}")
 
     elif backend == "openai":
         try:

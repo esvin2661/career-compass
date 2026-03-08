@@ -38,7 +38,7 @@ def load_courses() -> List[Dict]:
 
 # ── LangChain prompt (optional refinement) ───────────────────────────────────
 try:
-    from langchain.prompts import PromptTemplate
+    from langchain_core.prompts import PromptTemplate
     ROADMAP_PROMPT = PromptTemplate(
         input_variables=["role_name", "missing_skills", "courses_json", "preferences"],
         template=(

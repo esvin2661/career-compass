@@ -16,7 +16,7 @@ from typing import Dict, List, Optional
 logger = logging.getLogger(__name__)
 
 try:
-    from langchain.prompts import PromptTemplate
+    from langchain_core.prompts import PromptTemplate
     INTERVIEW_PROMPT = PromptTemplate(
         input_variables=["role_name", "level", "skills", "n_questions"],
         template=(
