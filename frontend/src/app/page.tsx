@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, DragEvent } from "react";
+import { useState, useRef, useEffect, DragEvent } from "react";
 
 // ─────────────────────────────────────────────
 // Types
@@ -76,6 +76,10 @@ const Tag = ({ label, variant = "default" }: { label: string; variant?: "default
 // Main Page
 // ─────────────────────────────────────────────
 export default function Home() {
+  // authentication state
+  const [user, setUser] = useState<any>(null);
+  const [authLoading, setAuthLoading] = useState(true);
+
   const [resumeText, setResumeText] = useState("");
   const [githubUrl, setGithubUrl] = useState("");
   const [budget, setBudget] = useState("all");
@@ -95,6 +99,23 @@ export default function Home() {
   const [dropActive, setDropActive] = useState(false);
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const [isProcessingFile, setIsProcessingFile] = useState(false);
+
+  // check auth status on mount
+  useEffect(() => {
+    const check = async () => {
+      try {
+        const resp = await fetch(`${API_BASE}/me`, { credentials: 'include' });
+        if (resp.ok) {
+          const data = await resp.json();
+          setUser(data.user);
+        }
+      } catch (e) {
+        // ignore errors; treat as unauthenticated
+      }
+      setAuthLoading(false);
+    };
+    check();
+  }, []);
   const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setDropActive(true);
@@ -204,6 +225,7 @@ export default function Home() {
       console.log('Sending analysis request to backend...');
       const resp = await fetch(`${API_BASE}/analyze`, {
         method: "POST",
+        credentials: 'include',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
@@ -244,6 +266,28 @@ export default function Home() {
     ? Object.fromEntries(activeRoadmap.recommended_items.map(i => [i.id, i]))
     : {};
 
+  if (authLoading) {
+    return (
+      <main className="min-h-screen bg-paper font-body flex items-center justify-center">
+        <p className="text-lg text-muted">Checking authentication…</p>
+      </main>
+    );
+  }
+
+  if (!user) {
+    return (
+      <main className="min-h-screen bg-paper font-body flex flex-col items-center justify-center">
+        <h1 className="text-2xl font-display mb-4">Please sign in</h1>
+        <button
+          className="px-6 py-3 bg-accent text-paper rounded-lg font-medium"
+          onClick={() => (window.location.href = `${API_BASE}/login`)}
+        >
+          Login with Cognito
+        </button>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-paper font-body">
       {/* ── HEADER ── */}
@@ -260,7 +304,18 @@ export default function Home() {
           <nav className="flex items-center gap-6">
             {/* Navigation removed as requested */}
           </nav>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
+            {user && (
+              <>
+                <span className="text-sm text-ink">Hi, {user.email}</span>
+                <button
+                  className="text-sm text-accent underline"
+                  onClick={() => (window.location.href = `${API_BASE}/logout`)}
+                >
+                  Logout
+                </button>
+              </>
+            )}
             <span className="text-xs text-muted font-mono">MVP v1.0</span>
           </div>
         </div>

@@ -1,17 +1,18 @@
 # Career Compass – Skill Gap Analyzer & Learning Roadmap
 
 > Paste a resume → get skill gaps, a personalized learning roadmap, and mock interview questions.
-> Powered by **LangChain + sentence-transformers + FAISS** — no Azure, no paid API required.
+> Powered by **LangChain + sentence-transformers + FAISS** backed by SQLite, Google Gemini, and AWS Cognito.
 
 ---
 
-## Architecture
+## Architecture & Tech Stack
 
 ```
-/backend      FastAPI (Python) — LangChain pipeline + embeddings
-/frontend     Next.js 14 (App Router) + Tailwind CSS — single-page UI
+/backend      FastAPI (Python) — LangChain pipeline + embeddings, SQLite storage, Cognito auth
+/frontend     Next.js 14 (App Router) + TypeScript + Tailwind CSS — SPA interface
+/AI           Google Gemini (via langchain-google-genai) for optional text generation
+/Cloud        Deployed on AWS (Lambda/EC2) with Cognito for authentication
 ```
-
 ### Backend Pipeline
 ```
 POST /analyze
@@ -42,8 +43,18 @@ source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 cp .env.example .env
 # Edit .env if you want LLM features (see LLM Backend section)
-./run.sh  # or: uvicorn main:app --reload --port 8000
+PYTHONPATH=/path/to/backend ./run.sh  # or: PYTHONPATH=/path/to/backend uvicorn main:app --reload --port 8000
 ```
+
+#### Cognito / Authentication Example
+
+The backend ships with a small AWS Cognito/OIDC integration example.  A
+separate Flask demo (`backend/auth_example.py`) shows the classic flow, and
+FastAPI routes are already wired up in `backend/main.py` (login, authorize,
+logout).  To use, register a Cognito user pool client, set the proper
+`CLIENT_ID`, `CLIENT_SECRET`, and configure callback/logout URLs.  Store the
+secret in `.env` under `COGNITO_CLIENT_SECRET` and optionally set a
+`SESSION_SECRET` for session middleware.
 
 On first run, `sentence-transformers` will download **all-mpnet-base-v2** (~420 MB) automatically.
 

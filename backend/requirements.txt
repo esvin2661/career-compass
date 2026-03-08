@@ -25,3 +25,8 @@ scikit-learn==1.4.2
 # ── Testing ───────────────────────────────────────────────
 pytest==8.2.0
 pytest-asyncio==0.23.7
+# ── AWS Cognito / OAuth examples ─────────────────────────
+authlib==1.2.2
+werkzeug==3.0.1
+flask==3.0.1
+requests==2.31.0

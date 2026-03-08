@@ -41,12 +41,43 @@ from text_extraction import extract_text_from_file
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+from fastapi import Request
+
+
+# --- AWS Cognito / OAuth setup (Authlib + Starlette) ---
+from authlib.integrations.starlette_client import OAuth
+from starlette.middleware.sessions import SessionMiddleware
+
+# load session middleware so we can store user info
 app = FastAPI(
     title="Career Compass API",
     description="LangChain-powered skill gap analysis, learning roadmap & mock interviews",
     version="2.0.0",
 )
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+app.add_middleware(SessionMiddleware, secret_key=os.getenv("SESSION_SECRET", os.urandom(24)))
+# allow CORS from frontend
+# allow CORS from frontend; permit cookies
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # restrict to frontend origin
+    allow_methods=["*"],
+    allow_headers=["*"],
+    allow_credentials=True,
+)
+
+# configure OAuth client (replace values with your own Cognito pool info)
+oauth = OAuth()
+oauth.register(
+    name='oidc',
+    authority='https://cognito-idp.us-east-1.amazonaws.com/us-east-1_HDgrrnope',
+    client_id='5vfbcoto2fjgdjkl5q9iffvppu',
+    client_secret=os.getenv('COGNITO_CLIENT_SECRET', '<client secret>'),
+    server_metadata_url='https://cognito-idp.us-east-1.amazonaws.com/us-east-1_HDgrrnope/.well-known/openid-configuration',
+    client_kwargs={'scope': 'phone openid email'}
+)
+
+# allow CORS from frontend
+
 
 STATE: dict = {}
 
@@ -161,11 +192,48 @@ class AnalyzeResponse(BaseModel):
 # ── Endpoints ────────────────────────────────────────────────────────────────
 
 @app.get("/")
-async def root():
+async def root(request: Request):
+    # If user is authenticated via Cognito, surface basic info
+    user = request.session.get("user")
     llm_st = "configured" if STATE.get("llm") else "disabled (deterministic fallbacks)"
     faiss_st = "ready" if STATE.get("faiss_index") is not None else "numpy fallback"
-    return {"message": "Career Compass API (LangChain)", "version": "2.0.0",
+    resp = {"message": "Career Compass API (LangChain)", "version": "2.0.0",
             "llm": llm_st, "vector_store": faiss_st}
+    if user:
+        resp["user"] = user
+    return resp
+
+
+# --- Cognito / OAuth authentication routes ---
+@app.get("/login")
+async def login(request: Request):
+    redirect_uri = request.url_for('authorize')
+    return await oauth.oidc.authorize_redirect(request, redirect_uri)
+
+from fastapi.responses import RedirectResponse
+
+@app.get("/authorize")
+async def authorize(request: Request):
+    token = await oauth.oidc.authorize_access_token(request)
+    user = token.get('userinfo')
+    request.session['user'] = user
+    # after successful login, send the user back to the frontend app
+    frontend = os.getenv("FRONTEND_URL", "http://localhost:3000")
+    return RedirectResponse(frontend)
+
+@app.get("/logout")
+async def logout(request: Request):
+    request.session.pop('user', None)
+    frontend = os.getenv("FRONTEND_URL", "http://localhost:3000")
+    return RedirectResponse(frontend)
+
+
+@app.get("/me")
+async def me(request: Request):
+    user = request.session.get("user")
+    if not user:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    return {"user": user}
 
 
 @app.get("/roles")
