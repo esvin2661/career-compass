@@ -37,11 +37,12 @@ POST /analyze
 
 ```bash
 cd backend
-python -m venv .venv && source .venv/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 cp .env.example .env
 # Edit .env if you want LLM features (see LLM Backend section)
-uvicorn main:app --reload --port 8000
+./run.sh  # or: uvicorn main:app --reload --port 8000
 ```
 
 On first run, `sentence-transformers` will download **all-mpnet-base-v2** (~420 MB) automatically.
@@ -75,6 +76,19 @@ The API runs fully without an LLM — all extraction, matching, and question gen
 
 ### `GET /roles`
 Returns metadata for all loaded roles.
+
+### `POST /extract-text`
+
+**Request:** Multipart form with `file` field containing resume file.
+
+**Supported formats:** PDF, DOCX, DOC, HTML, TXT
+
+**Response:**
+```json
+{
+  "text": "Extracted text content..."
+}
+```
 
 ### `POST /analyze`
 
@@ -169,6 +183,12 @@ Restart the server — it auto-loads.
 
 - [ ] Replace numpy fallback with persistent FAISS index on disk
 - [ ] Persist roadmaps with shareable links (Redis or DB)
+
+### Recent changes
+
+* **Multi-format resume upload** – now accepts PDF, DOCX, DOC, HTML, and TXT files via drag-and-drop or file picker. Text is automatically extracted server-side.
+* **Drag‑and‑drop resume support** – you can now drop a file onto the input box or choose a file instead of copying/pasting.
+* **Simple SQLite history** – every analyze request/response is saved under `backend/analyses.db` and can be inspected via `GET /analyses`.
 - [ ] Streaming LLM responses via SSE
 - [ ] Automated job-board ingestion pipeline
 - [ ] Mentor view: export PDF, annotate roadmap

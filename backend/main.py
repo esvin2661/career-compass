@@ -8,12 +8,13 @@ Pipeline:
 """
 import logging
 import os
+import json
 from typing import Optional
 
 from dotenv import load_dotenv
 load_dotenv()
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
@@ -31,6 +32,11 @@ from utils import (
     infer_seniority,
     fetch_github_profile,
 )
+
+# persistent storage
+from . import db
+# text extraction
+from .text_extraction import extract_text_from_file
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -96,6 +102,9 @@ def _build_llm():
 
 @app.on_event("startup")
 async def startup():
+    # ensure database exists before anything else
+    db.init_db()
+
     roles = load_roles()
     courses = load_courses()
     ontology = build_skill_ontology(roles)
@@ -158,6 +167,52 @@ async def get_roles():
 @app.get("/courses")
 async def get_courses():
     return STATE.get("courses", [])
+
+
+@app.get("/analyses")
+async def list_analyses(limit: int = 20):
+    """Return the most recent analyze requests/results (for debugging & sharing).
+
+    The stored rows include JSON-encoded inputs and outputs. This endpoint is
+    intentionally simple and unauthenticated since the MVP doesn't have user
+    accounts; avoid sending sensitive data here in production.
+    """
+    rows = db.get_recent(limit)
+    # decode JSON fields before returning
+    parsed = []
+    for r in rows:
+        _id, ts, resume, gh, roles, prefs, result = r
+        parsed.append({
+            "id": _id,
+            "timestamp": ts,
+            "resume_text": resume,
+            "github_url": gh,
+            "target_roles": json.loads(roles) if roles else None,
+            "preferences": json.loads(prefs) if prefs else None,
+            "result": json.loads(result) if result else None,
+        })
+    return parsed
+
+
+@app.post("/extract-text")
+async def extract_text(file: UploadFile = File(...)):
+    """Extract text from an uploaded resume file.
+
+    Supports PDF, DOCX, DOC, HTML, TXT formats.
+    Returns the extracted text as plain string.
+    """
+    if not file.filename:
+        raise HTTPException(status_code=400, detail="No file provided")
+
+    # Read file content
+    content = await file.read()
+
+    # Extract text
+    extracted = extract_text_from_file(content, file.filename)
+    if extracted is None:
+        raise HTTPException(status_code=400, detail=f"Could not extract text from {file.filename}. Supported formats: PDF, DOCX, DOC, HTML, TXT")
+
+    return {"text": extracted}
 
 
 @app.post("/analyze", response_model=AnalyzeResponse)
@@ -301,14 +356,30 @@ async def analyze(req: AnalyzeRequest):
         "seniority_inferred": infer_seniority(profile),
     }
 
-    return AnalyzeResponse(
-        profile=output_profile,
-        extracted_skills=extracted_skills_api,
-        role_recommendations=role_recommendations,
-        selected_roadmaps=selected_roadmaps,
-        mock_questions=mock_questions,
-        warnings=warnings,
-    )
+    # build the raw dict so it's easy to save and also to feed back into the
+    # response model
+    result_dict = {
+        "profile": output_profile,
+        "extracted_skills": extracted_skills_api,
+        "role_recommendations": role_recommendations,
+        "selected_roadmaps": selected_roadmaps,
+        "mock_questions": mock_questions,
+        "warnings": warnings,
+    }
+
+    # persist a copy of the request + result (non-blocking)
+    try:
+        db.save_analysis(
+            resume_text=req.resume_text,
+            github_url=req.github_url,
+            target_roles=target_roles,
+            preferences=prefs.model_dump() if prefs else None,
+            result=result_dict,
+        )
+    except Exception as e:  # pragma: no cover - db issues shouldn't break API
+        logger.warning(f"Failed to save analysis to DB: {e}")
+
+    return AnalyzeResponse(**result_dict)
 
 
 if __name__ == "__main__":

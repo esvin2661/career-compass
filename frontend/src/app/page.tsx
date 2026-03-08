@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, DragEvent } from "react";
 
 // ─────────────────────────────────────────────
 // Types
@@ -90,6 +90,79 @@ export default function Home() {
   const [inputMode, setInputMode] = useState<"resume" | "json">("resume");
   const [jsonInput, setJsonInput] = useState("");
 
+  // drag/drop helpers
+  const [dropActive, setDropActive] = useState(false);
+  const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
+  const [isProcessingFile, setIsProcessingFile] = useState(false);
+  const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setDropActive(true);
+  };
+  const handleDragLeave = () => setDropActive(false);
+  const handleFileDrop = async (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setDropActive(false);
+    const file = e.dataTransfer.files[0];
+    if (!file) return;
+    await processFile(file);
+  };
+
+  const processFile = async (file: File) => {
+    const ext = file.name.split('.').pop()?.toLowerCase();
+    console.log('Processing file:', file.name, 'extension:', ext);
+
+    if (!['txt', 'html', 'pdf', 'doc', 'docx'].includes(ext || '')) {
+      setError('Unsupported file format. Please use PDF, DOC, DOCX, HTML, or TXT files.');
+      return;
+    }
+
+    setIsProcessingFile(true);
+    setError(null);
+    setUploadedFileName(file.name);
+
+    try {
+      if (ext === 'txt' || ext === 'html') {
+        // Read as text directly
+        const reader = new FileReader();
+        reader.onload = () => {
+          const text = reader.result as string;
+          console.log('Read text directly:', text.substring(0, 100) + '...');
+          setResumeText(text);
+          setIsProcessingFile(false);
+        };
+        reader.onerror = () => {
+          setError('Failed to read the file. Please try again.');
+          setIsProcessingFile(false);
+        };
+        reader.readAsText(file);
+      } else {
+        // Upload to backend for extraction
+        console.log('Uploading to backend for extraction...');
+        const formData = new FormData();
+        formData.append('file', file);
+        const resp = await fetch(`${API_BASE}/extract-text`, {
+          method: 'POST',
+          body: formData,
+        });
+        console.log('Backend response status:', resp.status);
+        if (!resp.ok) {
+          const err = await resp.json();
+          console.error('Backend error:', err);
+          throw new Error(err.detail || 'Failed to extract text from file');
+        }
+        const data = await resp.json();
+        console.log('Extracted text:', data.text.substring(0, 100) + '...');
+        setResumeText(data.text);
+        setIsProcessingFile(false);
+      }
+    } catch (e) {
+      console.error('Error processing file:', e);
+      setError(e instanceof Error ? e.message : 'Failed to process file');
+      setIsProcessingFile(false);
+      setUploadedFileName(null);
+    }
+  };
+
   const resultsRef = useRef<HTMLDivElement>(null);
 
   const ROLE_OPTIONS = [
@@ -128,7 +201,7 @@ export default function Home() {
       }
     } else {
       if (!resumeText.trim()) {
-        setError("Please paste your resume text.");
+        setError("Please paste your resume text or upload a file.");
         setLoading(false);
         return;
       }
@@ -136,6 +209,7 @@ export default function Home() {
     }
 
     try {
+      console.log('Sending analysis request to backend...');
       const resp = await fetch(`${API_BASE}/analyze`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -146,11 +220,18 @@ export default function Home() {
         throw new Error(err.detail || `API error ${resp.status}`);
       }
       const data: AnalyzeResult = await resp.json();
+      console.log('Analysis completed successfully, data saved to database');
+
       setResult(data);
       setActiveRole(data.role_recommendations[0]?.role_id || null);
       setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
+
+      // Show success message that data was saved
+      console.log('✅ Analysis results saved to database successfully');
+
     } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : "Unexpected error");
+      console.error('Analysis failed:', e);
+      setError(e instanceof Error ? e.message : "Unexpected error occurred during analysis");
     } finally {
       setLoading(false);
     }
@@ -175,6 +256,26 @@ export default function Home() {
             </div>
             <span className="font-display font-700 text-lg tracking-tight text-ink">Career Compass</span>
           </div>
+          <nav className="flex items-center gap-6">
+            <a
+              href="/mock-interview"
+              className="text-sm text-muted hover:text-accent transition-colors font-medium"
+            >
+              Mock Interviews
+            </a>
+            <a
+              href="/roadmap"
+              className="text-sm text-muted hover:text-accent transition-colors font-medium"
+            >
+              Learning Roadmap
+            </a>
+            <a
+              href="/gap-analysis"
+              className="text-sm text-muted hover:text-accent transition-colors font-medium"
+            >
+              Gap Analysis
+            </a>
+          </nav>
           <div className="flex items-center gap-2">
             <span className="text-xs text-muted font-mono">MVP v1.0</span>
           </div>
@@ -193,6 +294,48 @@ export default function Home() {
           <p className="text-muted text-lg leading-relaxed font-body">
             Paste your resume, get your skill gaps, a personalized learning roadmap, and tailored mock interview questions — in seconds.
           </p>
+        </div>
+
+        {/* Quick Access Tools */}
+        <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl">
+          <a
+            href="/mock-interview"
+            className="group p-6 border border-border rounded-xl hover:border-accent hover:bg-accent/5 transition-all text-center"
+          >
+            <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:bg-accent/20 transition-colors">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-accent">
+                <path d="M8 12L10 14L16 8M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" strokeWidth="2"/>
+              </svg>
+            </div>
+            <h3 className="font-display font-600 text-ink mb-1">Mock Interviews</h3>
+            <p className="text-xs text-muted">Practice with AI-generated interview questions</p>
+          </a>
+
+          <a
+            href="/roadmap"
+            className="group p-6 border border-border rounded-xl hover:border-accent hover:bg-accent/5 transition-all text-center"
+          >
+            <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:bg-accent/20 transition-colors">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-accent">
+                <path d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15M9 5C9 6.10457 9.89543 7 11 7H13C14.1046 7 15 6.10457 15 5M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5" stroke="currentColor" strokeWidth="2"/>
+              </svg>
+            </div>
+            <h3 className="font-display font-600 text-ink mb-1">Learning Roadmap</h3>
+            <p className="text-xs text-muted">Get personalized learning plans and milestones</p>
+          </a>
+
+          <a
+            href="/gap-analysis"
+            className="group p-6 border border-border rounded-xl hover:border-accent hover:bg-accent/5 transition-all text-center"
+          >
+            <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:bg-accent/20 transition-colors">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-accent">
+                <path d="M9 19V6L21 3V16M9 19C9 20.1046 8.10457 21 7 21C5.89543 21 5 20.1046 5 19C5 17.8954 5.89543 17 7 17C8.10457 17 9 17.8954 9 19ZM9 19L21 16M21 16C21 17.1046 21.8954 18 23 18C24.1046 18 25 17.1046 25 16C25 14.8954 24.1046 14 23 14C21.8954 14 21 14.8954 21 16Z" stroke="currentColor" strokeWidth="2"/>
+              </svg>
+            </div>
+            <h3 className="font-display font-600 text-ink mb-1">Gap Analysis</h3>
+            <p className="text-xs text-muted">Compare your skills against job market data</p>
+          </a>
         </div>
       </section>
 
@@ -222,14 +365,88 @@ export default function Home() {
               {inputMode === "resume" ? (
                 <>
                   <label className="block text-xs font-mono text-muted uppercase tracking-wider mb-2">
-                    Resume Text
+                    Resume Text (paste or upload file: PDF, DOC, DOCX, TXT, HTML)
                   </label>
-                  <textarea
-                    className="w-full h-56 bg-paper border border-border rounded-xl p-4 text-sm font-body text-ink placeholder:text-muted/60 focus:outline-none focus:ring-2 focus:ring-accent/30 resize-none"
-                    placeholder="Paste your resume here — work experience, skills, projects…"
-                    value={resumeText}
-                    onChange={e => setResumeText(e.target.value)}
-                  />
+                  <div
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleFileDrop}
+                    className={`relative border-2 border-dashed rounded-xl p-6 transition-colors ${
+                      dropActive
+                        ? "border-accent bg-accent/5"
+                        : isProcessingFile
+                        ? "border-accent/50 bg-accent/5"
+                        : uploadedFileName
+                        ? "border-teal/50 bg-teal/5"
+                        : "border-border hover:border-accent/50"
+                    }`}
+                  >
+                    <div className="text-center">
+                      {isProcessingFile ? (
+                        <div className="flex flex-col items-center gap-3">
+                          <svg className="animate-spin w-8 h-8 text-accent" viewBox="0 0 24 24" fill="none">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.4 0 0 5.4 0 12h4z"/>
+                          </svg>
+                          <p className="text-sm text-accent font-medium">Processing {uploadedFileName}...</p>
+                        </div>
+                      ) : uploadedFileName ? (
+                        <div className="flex flex-col items-center gap-3">
+                          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" className="text-teal">
+                            <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" strokeWidth="2"/>
+                          </svg>
+                          <div>
+                            <p className="text-sm text-teal font-medium">File uploaded successfully!</p>
+                            <p className="text-xs text-muted font-mono">{uploadedFileName}</p>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="flex flex-col items-center gap-3">
+                          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" className="text-muted">
+                            <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="currentColor" strokeWidth="2"/>
+                            <path d="M14 2V8H20" stroke="currentColor" strokeWidth="2"/>
+                            <path d="M16 13H8M16 17H8M10 9H8" stroke="currentColor" strokeWidth="2"/>
+                          </svg>
+                          <div>
+                            <p className="text-sm text-muted">Drop your resume here or click to browse</p>
+                            <p className="text-xs text-muted/60">Supports PDF, DOCX, HTML, TXT files</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    {dropActive && (
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none text-accent font-mono text-lg">
+                        Drop to upload
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="file"
+                      accept=".pdf,.doc,.docx,.txt,.html"
+                      className="flex-1 text-sm file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-accent file:text-white hover:file:bg-accent-dim file:cursor-pointer"
+                      onChange={async e => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          await processFile(file);
+                        }
+                      }}
+                      disabled={isProcessingFile}
+                    />
+                    {uploadedFileName && (
+                      <button
+                        onClick={() => {
+                          setResumeText("");
+                          setUploadedFileName(null);
+                          setError(null);
+                        }}
+                        className="px-3 py-2 text-xs text-muted hover:text-accent transition-colors"
+                        disabled={isProcessingFile}
+                      >
+                        Clear
+                      </button>
+                    )}
+                  </div>
                 </>
               ) : (
                 <>
@@ -368,6 +585,10 @@ export default function Home() {
       {/* ── RESULTS ── */}
       {result && (
         <div ref={resultsRef} className="max-w-5xl mx-auto px-6 pb-24 space-y-8">
+          {/* Success Message */}
+          <div className="p-4 bg-teal/10 border border-teal/30 rounded-xl text-sm text-teal-dim">
+            ✅ Analysis completed successfully! Your resume data and recommendations have been saved to the database for future reference.
+          </div>
           {/* Warnings */}
           {result.warnings.length > 0 && (
             <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-700 space-y-1">
@@ -624,27 +845,51 @@ export default function Home() {
             </section>
           )}
 
-          {/* ── Export CTA ── */}
-          <section className="border border-border rounded-2xl p-8 bg-white text-center">
-            <p className="font-display font-700 text-xl text-ink mb-1">Share this Roadmap</p>
-            <p className="text-sm text-muted mb-5">Export or copy your personalized plan to share with a mentor or colleague.</p>
-            <div className="flex justify-center gap-3 flex-wrap">
-              <button
-                onClick={() => {
-                  const text = JSON.stringify({ role: activeRoleData?.display_name, roadmap: activeRoadmap, questions: result.mock_questions }, null, 2);
-                  navigator.clipboard.writeText(text);
-                  alert("Roadmap JSON copied to clipboard!");
-                }}
-                className="px-6 py-2.5 bg-ink text-paper font-display font-600 rounded-xl hover:bg-accent-dim transition-colors text-sm"
+          {/* ── Next Steps ── */}
+          <section className="border border-border rounded-2xl p-8 bg-white">
+            <div className="text-center mb-6">
+              <p className="font-display font-700 text-xl text-ink mb-1">Ready for the Next Step?</p>
+              <p className="text-sm text-muted">Explore your career path with our specialized tools</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <a
+                href={`/mock-interview?role=${encodeURIComponent(activeRoleData?.display_name || 'Software Engineer')}`}
+                className="group p-6 border border-border rounded-xl hover:border-accent transition-colors text-center"
               >
-                Copy JSON Roadmap
-              </button>
-              <button
-                onClick={() => window.print()}
-                className="px-6 py-2.5 border border-border text-ink font-display font-600 rounded-xl hover:border-ink transition-colors text-sm"
+                <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:bg-accent/20 transition-colors">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-accent">
+                    <path d="M8 12L10 14L16 8M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" strokeWidth="2"/>
+                  </svg>
+                </div>
+                <h3 className="font-display font-600 text-ink mb-1">Mock Interviews</h3>
+                <p className="text-xs text-muted">Practice with tailored interview questions</p>
+              </a>
+
+              <a
+                href={`/roadmap?role=${encodeURIComponent(activeRoleData?.display_name || 'Software Engineer')}`}
+                className="group p-6 border border-border rounded-xl hover:border-accent transition-colors text-center"
               >
-                Print / Save PDF
-              </button>
+                <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:bg-accent/20 transition-colors">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-accent">
+                    <path d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15M9 5C9 6.10457 9.89543 7 11 7H13C14.1046 7 15 6.10457 15 5M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5" stroke="currentColor" strokeWidth="2"/>
+                  </svg>
+                </div>
+                <h3 className="font-display font-600 text-ink mb-1">Learning Roadmap</h3>
+                <p className="text-xs text-muted">Follow your personalized learning plan</p>
+              </a>
+
+              <a
+                href={`/gap-analysis?role=${encodeURIComponent(activeRoleData?.display_name || 'Software Engineer')}`}
+                className="group p-6 border border-border rounded-xl hover:border-accent transition-colors text-center"
+              >
+                <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:bg-accent/20 transition-colors">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-accent">
+                    <path d="M9 19V6L21 3V16M9 19C9 20.1046 8.10457 21 7 21C5.89543 21 5 20.1046 5 19C5 17.8954 5.89543 17 7 17C8.10457 17 9 17.8954 9 19ZM9 19L21 16M21 16C21 17.1046 21.8954 18 23 18C24.1046 18 25 17.1046 25 16C25 14.8954 24.1046 14 23 14C21.8954 14 21 14.8954 21 16Z" stroke="currentColor" strokeWidth="2"/>
+                  </svg>
+                </div>
+                <h3 className="font-display font-600 text-ink mb-1">Gap Analysis</h3>
+                <p className="text-xs text-muted">Compare against 100+ job descriptions</p>
+              </a>
             </div>
           </section>
         </div>

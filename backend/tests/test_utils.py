@@ -197,6 +197,33 @@ class TestGapAnalysis:
         assert result["matched_skills"] == []
 
 
+# ── Database helper tests ─────────────────────────────────────────────────────
+
+def test_db_save_and_fetch(tmp_path):
+    # point the module at a temp file so tests don't interfere with real data
+    import db as _db
+    _db.DB_PATH = tmp_path / "test.db"
+    _db.init_db()
+
+    payload = {
+        "profile": {"headline": "x"},
+        "extracted_skills": [],
+        "role_recommendations": [],
+        "selected_roadmaps": {},
+        "mock_questions": [],
+        "warnings": [],
+    }
+    _db.save_analysis("some resume", "https://github.com/abc", ["cloud_engineer"], {"budget": "all"}, payload)
+    rows = _db.get_recent(5)
+    assert len(rows) == 1
+    _id, ts, resume, gh, roles, prefs, result = rows[0]
+    assert resume == "some resume"
+    assert gh == "https://github.com/abc"
+    assert json.loads(roles) == ["cloud_engineer"]
+    decoded = json.loads(result)
+    assert decoded["profile"]["headline"] == "x"
+
+
 # ── Roadmap generation ────────────────────────────────────────────────────────
 
 class TestRoadmap:
@@ -265,3 +292,22 @@ class TestInterviewQuestions:
     def test_pads_to_n_when_few_skills(self):
         qs = _fallback_questions("PM", ["Agile"], "junior", 5)
         assert len(qs) == 5
+
+
+# ── Text extraction tests ──────────────────────────────────────────────────────
+def test_extract_text_from_file_unsupported():
+    from text_extraction import extract_text_from_file
+    result = extract_text_from_file(b"dummy", "file.xyz")
+    assert result is None
+
+def test_extract_text_from_file_txt():
+    from text_extraction import extract_text_from_file
+    result = extract_text_from_file(b"Hello world", "test.txt")
+    assert result == "Hello world"
+
+def test_extract_text_from_file_html():
+    from text_extraction import extract_text_from_file
+    html = b"<html><body><p>Hello</p><script>ignore me</script></body></html>"
+    result = extract_text_from_file(html, "test.html")
+    assert "Hello" in result
+    assert "ignore me" not in result
