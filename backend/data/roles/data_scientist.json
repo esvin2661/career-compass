@@ -1,0 +1,41 @@
+{
+  "role_id": "data_scientist",
+  "display_name": "Data Scientist",
+  "job_snippets": [
+    "Build and deploy machine learning models for classification, regression, and clustering using scikit-learn, XGBoost, or LightGBM.",
+    "Develop deep learning architectures with PyTorch or TensorFlow for NLP, vision, or tabular tasks.",
+    "Perform exploratory data analysis (EDA) using Pandas, NumPy, and visualization libraries like Matplotlib, Seaborn, Plotly.",
+    "Design A/B experiments and statistical tests to measure feature impact; communicate results to stakeholders.",
+    "Build and maintain ML pipelines using MLflow, Kubeflow, or Airflow for model training and serving.",
+    "Write efficient SQL queries against data warehouses like Snowflake, BigQuery, or Redshift.",
+    "Clean, wrangle, and transform large datasets; handle missing values, outliers, and feature engineering.",
+    "Implement NLP pipelines: text preprocessing, tokenization, embeddings, and fine-tuning transformers (BERT, GPT).",
+    "Deploy ML models as REST APIs using FastAPI or Flask; integrate with production systems.",
+    "Collaborate with data engineers to ingest data from multiple sources into the feature store.",
+    "Use cloud ML platforms: AWS SageMaker, Azure ML, or Vertex AI for scalable training and inference.",
+    "Monitor model performance and data drift in production; implement retraining pipelines.",
+    "Create compelling data visualizations and dashboards using Tableau, Power BI, or Streamlit.",
+    "Apply causal inference methods: diff-in-diff, instrumental variables, regression discontinuity.",
+    "Strong background in probability, statistics, linear algebra, and calculus.",
+    "Version control for data and models: DVC, Git, experiment tracking with MLflow or Weights & Biases.",
+    "Work with unstructured data: images, text, audio; apply computer vision or speech recognition models.",
+    "Communicate findings clearly in Jupyter Notebooks, written reports, and presentations.",
+    "Experience with recommender systems, ranking models, or reinforcement learning is a plus.",
+    "Understand data governance, PII handling, and model fairness and bias considerations."
+  ],
+  "skill_list": [
+    {"skill_id": "python", "label": "Python", "importance": "core", "synonyms": ["python3", "scripting", "py"]},
+    {"skill_id": "ml_fundamentals", "label": "Machine Learning", "importance": "core", "synonyms": ["supervised learning", "unsupervised learning", "classification", "regression", "scikit-learn", "sklearn", "xgboost", "lightgbm"]},
+    {"skill_id": "deep_learning", "label": "Deep Learning", "importance": "core", "synonyms": ["pytorch", "tensorflow", "keras", "neural networks", "cnn", "rnn", "transformers"]},
+    {"skill_id": "pandas_numpy", "label": "Pandas & NumPy", "importance": "core", "synonyms": ["pandas", "numpy", "dataframes", "data manipulation"]},
+    {"skill_id": "sql", "label": "SQL", "importance": "core", "synonyms": ["mysql", "postgres", "postgresql", "snowflake", "bigquery", "redshift", "queries"]},
+    {"skill_id": "statistics", "label": "Statistics & Probability", "importance": "core", "synonyms": ["statistical analysis", "hypothesis testing", "a/b testing", "probability", "bayesian", "regression"]},
+    {"skill_id": "data_viz", "label": "Data Visualization", "importance": "core", "synonyms": ["matplotlib", "seaborn", "plotly", "tableau", "power bi", "dashboards"]},
+    {"skill_id": "nlp", "label": "NLP", "importance": "optional", "synonyms": ["natural language processing", "bert", "gpt", "transformers", "hugging face", "text classification", "embeddings"]},
+    {"skill_id": "ml_ops", "label": "MLOps", "importance": "optional", "synonyms": ["mlflow", "kubeflow", "airflow", "model deployment", "model monitoring", "dvc", "weights and biases"]},
+    {"skill_id": "cloud_ml", "label": "Cloud ML Platforms", "importance": "optional", "synonyms": ["sagemaker", "azure ml", "vertex ai", "databricks"]},
+    {"skill_id": "feature_engineering", "label": "Feature Engineering", "importance": "core", "synonyms": ["feature selection", "data preprocessing", "wrangling", "normalization", "encoding"]},
+    {"skill_id": "experiment_design", "label": "Experiment Design", "importance": "optional", "synonyms": ["a/b testing", "causal inference", "hypothesis testing", "experiment design"]},
+    {"skill_id": "git", "label": "Git", "importance": "core", "synonyms": ["version control", "github", "gitlab"]}
+  ]
+}

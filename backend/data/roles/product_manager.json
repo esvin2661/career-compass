@@ -1,0 +1,39 @@
+{
+  "role_id": "product_manager",
+  "display_name": "Product Manager",
+  "job_snippets": [
+    "Define product vision, strategy, and roadmap aligned to company OKRs; prioritize features using frameworks like RICE or MoSCoW.",
+    "Write detailed product requirements documents (PRDs), user stories, and acceptance criteria for engineering teams.",
+    "Conduct user research: interviews, surveys, usability tests; synthesize insights into product decisions.",
+    "Analyze product metrics using SQL and tools like Amplitude, Mixpanel, or Tableau; set up KPI dashboards.",
+    "Facilitate cross-functional collaboration between engineering, design, marketing, and sales teams.",
+    "Run agile ceremonies: sprint planning, stand-ups, retrospectives, and backlog grooming.",
+    "Launch products end-to-end: beta programs, go-to-market planning, release notes, and post-launch reviews.",
+    "Manage the product backlog in Jira or Linear; groom tickets, define milestones, and track velocity.",
+    "Conduct competitive analysis and market research; identify customer pain points and opportunities.",
+    "Define and monitor A/B experiments to validate hypotheses and measure feature impact on North Star metrics.",
+    "Build business cases and ROI models to justify product investments to leadership.",
+    "Partner with UX/design on wireframes, prototypes, and design reviews; champion user-centric decisions.",
+    "Communicate product strategy and progress through roadmap presentations to executives and stakeholders.",
+    "Work with data science teams to leverage ML/AI features for personalization, recommendations, or automation.",
+    "Strong understanding of technical architecture to assess feasibility, trade-offs, and technical debt.",
+    "Manage API products or developer platforms: documentation, versioning, partner integrations.",
+    "Lead discovery phases: assumption mapping, problem framing, Jobs-to-be-Done analysis.",
+    "Experience in B2B SaaS, consumer apps, or platform products with complex stakeholder environments.",
+    "Define pricing models, packaging tiers, and monetization strategies in collaboration with finance.",
+    "Build and mentor a team of associate PMs; establish PM culture and best practices."
+  ],
+  "skill_list": [
+    {"skill_id": "product_strategy", "label": "Product Strategy & Roadmapping", "importance": "core", "synonyms": ["product strategy", "roadmap", "okrs", "prioritization", "rice", "moscow", "product vision"]},
+    {"skill_id": "user_research", "label": "User Research", "importance": "core", "synonyms": ["user interviews", "usability testing", "surveys", "ux research", "customer discovery", "jobs to be done"]},
+    {"skill_id": "data_analysis_pm", "label": "Data Analysis", "importance": "core", "synonyms": ["sql", "amplitude", "mixpanel", "tableau", "kpis", "metrics", "analytics", "a/b testing"]},
+    {"skill_id": "agile", "label": "Agile & Scrum", "importance": "core", "synonyms": ["agile", "scrum", "sprint", "kanban", "jira", "linear", "backlog", "stand-up", "retrospective"]},
+    {"skill_id": "prd_writing", "label": "PRD & Documentation", "importance": "core", "synonyms": ["product requirements", "prd", "user stories", "acceptance criteria", "specifications"]},
+    {"skill_id": "stakeholder_mgmt", "label": "Stakeholder Management", "importance": "core", "synonyms": ["stakeholder management", "communication", "presentations", "executive reporting", "cross-functional"]},
+    {"skill_id": "go_to_market", "label": "Go-to-Market", "importance": "optional", "synonyms": ["gtm", "go-to-market", "launch planning", "release management", "beta programs"]},
+    {"skill_id": "competitive_analysis", "label": "Competitive Analysis", "importance": "optional", "synonyms": ["market research", "competitive intelligence", "benchmarking"]},
+    {"skill_id": "ux_design", "label": "UX & Design Collaboration", "importance": "optional", "synonyms": ["figma", "wireframes", "prototypes", "ux", "design thinking", "user experience"]},
+    {"skill_id": "technical_fluency", "label": "Technical Fluency", "importance": "core", "synonyms": ["api", "system design", "technical architecture", "feasibility", "engineering collaboration"]},
+    {"skill_id": "business_acumen", "label": "Business Acumen", "importance": "optional", "synonyms": ["business case", "roi", "pricing", "monetization", "p&l", "revenue"]}
+  ]
+}

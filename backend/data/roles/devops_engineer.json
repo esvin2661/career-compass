@@ -1,0 +1,40 @@
+{
+  "role_id": "devops_engineer",
+  "display_name": "DevOps Engineer",
+  "job_snippets": [
+    "Design, implement, and maintain CI/CD pipelines using GitHub Actions, Jenkins, or GitLab CI/CD for automated testing and deployment.",
+    "Manage containerized infrastructure with Docker and Kubernetes; administer EKS, AKS, or GKE clusters.",
+    "Write Infrastructure as Code with Terraform, Ansible, or CloudFormation; manage state and drift detection.",
+    "Implement GitOps workflows using ArgoCD or Flux for declarative, version-controlled deployments.",
+    "Build and maintain observability stacks: metrics (Prometheus/Grafana), logging (ELK/Loki), and tracing (Jaeger/Tempo).",
+    "Automate infrastructure provisioning and configuration management with Ansible or Chef.",
+    "Manage secrets and certificate lifecycle: HashiCorp Vault, AWS Secrets Manager, cert-manager.",
+    "Design networking for multi-cloud or hybrid environments: VPCs, peering, VPNs, transit gateways.",
+    "Perform capacity planning, performance tuning, and incident response; on-call with SLA commitments.",
+    "Implement database automation: backups, failover testing, schema migration pipelines.",
+    "Set up software artifact management: Nexus, JFrog Artifactory, GitHub Packages.",
+    "Develop internal developer platforms (IDPs) to improve developer productivity and self-service.",
+    "Apply DevSecOps practices: SAST/DAST in CI pipeline, vulnerability scanning, policy-as-code (OPA).",
+    "Manage cloud costs and optimize resource utilization; implement tagging and FinOps practices.",
+    "Write automation scripts in Python, Go, or Bash to reduce toil and manual operations.",
+    "Collaborate with developers to improve build times, test reliability, and deployment frequency.",
+    "Manage SLA/SLO/SLI frameworks and error budgets; lead blameless post-mortems.",
+    "Evaluate and adopt new tooling; maintain internal tooling and runbooks.",
+    "Support multi-tenant Kubernetes environments; implement namespace isolation and resource quotas.",
+    "Experience with service mesh (Istio) and advanced networking for microservices architectures."
+  ],
+  "skill_list": [
+    {"skill_id": "cicd", "label": "CI/CD Pipelines", "importance": "core", "synonyms": ["github actions", "jenkins", "gitlab ci", "circleci", "continuous integration", "continuous deployment", "pipelines", "argocd", "flux", "gitops"]},
+    {"skill_id": "docker", "label": "Docker", "importance": "core", "synonyms": ["containers", "containerization", "dockerfile", "docker-compose", "container registry"]},
+    {"skill_id": "kubernetes", "label": "Kubernetes", "importance": "core", "synonyms": ["k8s", "kubectl", "helm", "eks", "aks", "gke", "pod", "deployment"]},
+    {"skill_id": "terraform", "label": "Terraform / IaC", "importance": "core", "synonyms": ["terraform", "infrastructure as code", "iac", "cloudformation", "pulumi", "ansible", "chef"]},
+    {"skill_id": "linux", "label": "Linux", "importance": "core", "synonyms": ["ubuntu", "centos", "rhel", "linux", "unix", "sysadmin", "bash"]},
+    {"skill_id": "aws", "label": "AWS", "importance": "core", "synonyms": ["amazon web services", "ec2", "s3", "rds", "iam", "eks", "cloudwatch"]},
+    {"skill_id": "monitoring", "label": "Monitoring & Observability", "importance": "core", "synonyms": ["prometheus", "grafana", "datadog", "elk", "splunk", "cloudwatch", "logging", "alerting", "tracing", "jaeger"]},
+    {"skill_id": "python", "label": "Python / Scripting", "importance": "core", "synonyms": ["python", "bash", "shell scripting", "go", "automation scripts"]},
+    {"skill_id": "git", "label": "Git", "importance": "core", "synonyms": ["git", "github", "gitlab", "version control"]},
+    {"skill_id": "security_devops", "label": "DevSecOps", "importance": "optional", "synonyms": ["devsecops", "sast", "dast", "security scanning", "vault", "opa", "policy as code"]},
+    {"skill_id": "networking", "label": "Networking", "importance": "optional", "synonyms": ["vpc", "dns", "load balancer", "vpn", "networking", "tcp/ip", "firewall"]},
+    {"skill_id": "sre_practices", "label": "SRE Practices", "importance": "optional", "synonyms": ["sre", "slo", "sli", "sla", "error budget", "incident response", "post-mortem"]}
+  ]
+}

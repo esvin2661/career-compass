@@ -1,0 +1,41 @@
+{
+  "role_id": "frontend_dev",
+  "display_name": "Frontend Developer",
+  "job_snippets": [
+    "Build performant, accessible React or Next.js applications with TypeScript; manage state with Redux, Zustand, or React Query.",
+    "Implement responsive, pixel-perfect UIs from Figma designs using Tailwind CSS, CSS Modules, or styled-components.",
+    "Write unit and integration tests with Jest, React Testing Library, and end-to-end tests with Playwright or Cypress.",
+    "Optimize web performance: Core Web Vitals, lazy loading, code splitting, image optimization, and caching strategies.",
+    "Consume REST and GraphQL APIs; handle authentication flows (OAuth, JWT) and error states gracefully.",
+    "Build reusable component libraries and design systems; publish to npm or internal registries.",
+    "Configure Webpack, Vite, or Turbopack; understand module bundling, tree-shaking, and build optimization.",
+    "Implement SEO best practices: meta tags, structured data, Open Graph, sitemap generation.",
+    "Collaborate with designers and backend engineers in agile teams; participate in code reviews.",
+    "Use Git workflows: feature branches, pull requests, rebasing, and semantic versioning.",
+    "Implement internationalization (i18n) and localization for multi-language applications.",
+    "Work with animations and transitions using Framer Motion, GSAP, or CSS animations.",
+    "Deploy to Vercel, Netlify, or AWS CloudFront; manage environment configs and preview deployments.",
+    "Understand browser APIs: LocalStorage, Service Workers, WebSockets, Intersection Observer.",
+    "Implement accessibility standards (WCAG 2.1): ARIA roles, keyboard navigation, screen reader testing.",
+    "Work with monorepos using Nx, Turborepo, or Lerna for large-scale frontend projects.",
+    "Profile and debug performance using Chrome DevTools, Lighthouse, and bundle analyzers.",
+    "Integrate analytics and monitoring: Google Analytics, Mixpanel, Sentry for error tracking.",
+    "Experience with micro-frontends, module federation, or component-driven development with Storybook.",
+    "Strong understanding of HTTP, web security (CSP, CORS, XSS, CSRF), and browser rendering pipeline."
+  ],
+  "skill_list": [
+    {"skill_id": "react", "label": "React", "importance": "core", "synonyms": ["reactjs", "react.js", "hooks", "jsx", "next.js", "nextjs", "remix"]},
+    {"skill_id": "typescript", "label": "TypeScript", "importance": "core", "synonyms": ["ts", "typescript", "type safety"]},
+    {"skill_id": "javascript", "label": "JavaScript", "importance": "core", "synonyms": ["js", "es6", "es2015", "vanilla js", "ecmascript"]},
+    {"skill_id": "css", "label": "CSS & Styling", "importance": "core", "synonyms": ["css3", "tailwind", "tailwindcss", "sass", "scss", "styled-components", "css modules", "flexbox", "grid"]},
+    {"skill_id": "html", "label": "HTML", "importance": "core", "synonyms": ["html5", "semantic html", "markup"]},
+    {"skill_id": "testing_frontend", "label": "Frontend Testing", "importance": "core", "synonyms": ["jest", "react testing library", "vitest", "cypress", "playwright", "unit testing", "e2e testing"]},
+    {"skill_id": "git", "label": "Git", "importance": "core", "synonyms": ["version control", "github", "gitlab"]},
+    {"skill_id": "api_integration", "label": "API Integration", "importance": "core", "synonyms": ["rest api", "graphql", "fetch", "axios", "react query", "swr", "trpc"]},
+    {"skill_id": "performance", "label": "Web Performance", "importance": "optional", "synonyms": ["core web vitals", "lighthouse", "lazy loading", "code splitting", "bundle optimization"]},
+    {"skill_id": "accessibility", "label": "Accessibility (a11y)", "importance": "optional", "synonyms": ["wcag", "aria", "screen reader", "a11y", "accessibility"]},
+    {"skill_id": "state_management", "label": "State Management", "importance": "optional", "synonyms": ["redux", "zustand", "mobx", "recoil", "jotai", "context api"]},
+    {"skill_id": "build_tools", "label": "Build Tools", "importance": "optional", "synonyms": ["webpack", "vite", "turbopack", "rollup", "esbuild", "babel"]},
+    {"skill_id": "design_systems", "label": "Design Systems", "importance": "optional", "synonyms": ["storybook", "component library", "design tokens", "figma"]}
+  ]
+}

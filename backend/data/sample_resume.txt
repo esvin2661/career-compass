@@ -1,0 +1,43 @@
+Jane Doe
+jane.doe@email.com | github.com/janedoe | linkedin.com/in/janedoe
+
+SUMMARY
+Recent computer science graduate with hands-on experience in Python, SQL, and machine learning. Passionate about data-driven decision making and building scalable ML systems. Seeking a Data Scientist role where I can apply statistical modeling and deep learning skills to solve real business problems.
+
+EDUCATION
+B.S. Computer Science – University of California, San Diego (2023)
+Relevant coursework: Machine Learning, Statistical Inference, Algorithms, Databases, Linear Algebra
+
+EXPERIENCE
+
+Data Science Intern – Acme Analytics (June 2023 – December 2023)
+- Built a customer churn prediction model using XGBoost and scikit-learn, achieving 87% AUC-ROC
+- Performed exploratory data analysis on 2M+ rows using Pandas and NumPy; identified 3 key churn signals
+- Wrote complex SQL queries in BigQuery to extract and aggregate user behavior data
+- Created interactive dashboards in Tableau to visualize weekly churn trends for stakeholders
+- Collaborated with the engineering team to deploy the model as a REST API using FastAPI
+
+Research Assistant – UCSD AI Lab (September 2022 – May 2023)
+- Implemented a BERT-based text classification model for sentiment analysis using PyTorch and Hugging Face
+- Preprocessed and tokenized a dataset of 500K tweets; fine-tuned model achieving 91% accuracy
+- Wrote a technical report summarizing methodology and results; presented at department seminar
+
+PROJECTS
+
+Recommender System (GitHub: janedoe/movie-rec)
+- Built a collaborative filtering recommender system using matrix factorization (SVD) with Python
+- Trained on MovieLens 100K dataset; evaluated with RMSE and MAP metrics
+- Deployed as a Streamlit web app; containerized with Docker
+
+Stock Price Prediction
+- Applied LSTM neural networks using TensorFlow/Keras to predict daily closing prices
+- Engineered 12 features from raw OHLCV data; achieved 3.2% MAPE on test set
+- Documented results and methodology in a Jupyter Notebook
+
+SKILLS
+Languages: Python (advanced), SQL (intermediate), R (beginner), JavaScript (beginner)
+ML/Data: scikit-learn, XGBoost, PyTorch, TensorFlow, Keras, Hugging Face Transformers
+Data Tools: Pandas, NumPy, Matplotlib, Seaborn, Plotly, Tableau, Jupyter
+Databases: PostgreSQL, BigQuery, MySQL
+Cloud: basic AWS (S3, EC2), Docker
+Other: Git, GitHub, FastAPI, Streamlit, Linux basics

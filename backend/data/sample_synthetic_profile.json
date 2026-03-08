@@ -1,0 +1,59 @@
+{
+  "name": "Alex Rivera",
+  "email": "alex.rivera@example.com",
+  "headline": "Software Engineer transitioning to Cloud / DevOps",
+  "github_url": "https://github.com/alexrivera",
+  "target_roles": ["cloud_engineer", "devops_engineer"],
+  "education": [
+    {
+      "degree": "B.S. Electrical Engineering",
+      "institution": "University of Texas at Austin",
+      "graduation_year": 2020
+    }
+  ],
+  "experience": [
+    {
+      "title": "Backend Software Engineer",
+      "company": "FinTech Startup",
+      "duration_months": 36,
+      "bullets": [
+        "Built Python (Django/FastAPI) microservices handling 10K+ req/s; deployed to AWS EC2",
+        "Wrote Bash scripts to automate nightly database backups to S3",
+        "Managed PostgreSQL on AWS RDS; wrote complex SQL for reporting pipelines",
+        "Used Git (GitHub) for version control and participated in weekly code reviews",
+        "Troubleshot Linux server issues; configured systemd services and cron jobs",
+        "Introduced Docker containers for the dev environment; wrote basic Dockerfiles"
+      ]
+    },
+    {
+      "title": "Junior Developer",
+      "company": "Agency",
+      "duration_months": 12,
+      "bullets": [
+        "Developed REST APIs in Python/Flask; integrated third-party APIs",
+        "Maintained a Jenkins pipeline for automated test runs on pull requests"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Personal Lab on AWS",
+      "description": "Set up a personal AWS lab: VPC with public/private subnets, EC2 instances, RDS, and S3 static site. Used CloudFormation for basic IaC.",
+      "skills": ["aws", "networking", "bash", "linux"]
+    },
+    {
+      "name": "Docker Compose Dev Stack",
+      "description": "Defined a multi-service Docker Compose stack (app, Postgres, Redis, Nginx) for local development.",
+      "skills": ["docker", "linux"]
+    }
+  ],
+  "explicit_skills": [
+    "Python", "Bash", "Linux", "AWS", "Docker", "PostgreSQL", "SQL",
+    "Git", "GitHub", "Jenkins", "CI/CD basics", "REST APIs", "Networking basics"
+  ],
+  "preferences": {
+    "budget": "free",
+    "hours_per_week": 8,
+    "certification_focus": true
+  }
+}

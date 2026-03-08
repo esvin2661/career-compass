@@ -1,0 +1,272 @@
+[
+  {
+    "id": "c001",
+    "title": "AWS Certified Solutions Architect – Associate",
+    "url": "https://aws.amazon.com/certification/certified-solutions-architect-associate/",
+    "provider": "AWS",
+    "skills_covered": ["aws", "networking", "security_iam", "serverless", "cost_optimization"],
+    "hours_estimate": 40,
+    "cost_tag": "paid"
+  },
+  {
+    "id": "c002",
+    "title": "HashiCorp Terraform Associate Certification",
+    "url": "https://developer.hashicorp.com/terraform/tutorials/certification-associate-tutorials",
+    "provider": "HashiCorp",
+    "skills_covered": ["terraform"],
+    "hours_estimate": 20,
+    "cost_tag": "free"
+  },
+  {
+    "id": "c003",
+    "title": "Kubernetes for Developers (LFD259)",
+    "url": "https://training.linuxfoundation.org/training/kubernetes-for-developers/",
+    "provider": "Linux Foundation",
+    "skills_covered": ["kubernetes", "docker"],
+    "hours_estimate": 35,
+    "cost_tag": "paid"
+  },
+  {
+    "id": "c004",
+    "title": "Docker & Kubernetes: The Practical Guide",
+    "url": "https://www.udemy.com/course/docker-kubernetes-the-practical-guide/",
+    "provider": "Udemy",
+    "skills_covered": ["docker", "kubernetes", "cicd"],
+    "hours_estimate": 23,
+    "cost_tag": "paid"
+  },
+  {
+    "id": "c005",
+    "title": "GitHub Actions – The Complete Guide",
+    "url": "https://www.udemy.com/course/github-actions-the-complete-guide/",
+    "provider": "Udemy",
+    "skills_covered": ["cicd", "git"],
+    "hours_estimate": 14,
+    "cost_tag": "paid"
+  },
+  {
+    "id": "c006",
+    "title": "Python for Everybody Specialization",
+    "url": "https://www.coursera.org/specializations/python",
+    "provider": "Coursera / UMich",
+    "skills_covered": ["python"],
+    "hours_estimate": 32,
+    "cost_tag": "free"
+  },
+  {
+    "id": "c007",
+    "title": "Machine Learning Specialization (Andrew Ng)",
+    "url": "https://www.coursera.org/specializations/machine-learning-introduction",
+    "provider": "Coursera / DeepLearning.AI",
+    "skills_covered": ["ml_fundamentals", "statistics", "python"],
+    "hours_estimate": 90,
+    "cost_tag": "free"
+  },
+  {
+    "id": "c008",
+    "title": "Deep Learning Specialization",
+    "url": "https://www.coursera.org/specializations/deep-learning",
+    "provider": "Coursera / DeepLearning.AI",
+    "skills_covered": ["deep_learning", "ml_fundamentals"],
+    "hours_estimate": 120,
+    "cost_tag": "free"
+  },
+  {
+    "id": "c009",
+    "title": "Pandas for Data Analysis – Real World Projects",
+    "url": "https://www.udemy.com/course/data-analysis-with-pandas/",
+    "provider": "Udemy",
+    "skills_covered": ["pandas_numpy", "feature_engineering", "python"],
+    "hours_estimate": 18,
+    "cost_tag": "paid"
+  },
+  {
+    "id": "c010",
+    "title": "SQL for Data Science (UC Davis)",
+    "url": "https://www.coursera.org/learn/sql-for-data-science",
+    "provider": "Coursera / UC Davis",
+    "skills_covered": ["sql"],
+    "hours_estimate": 16,
+    "cost_tag": "free"
+  },
+  {
+    "id": "c011",
+    "title": "Statistics with Python Specialization",
+    "url": "https://www.coursera.org/specializations/statistics-with-python",
+    "provider": "Coursera / UMich",
+    "skills_covered": ["statistics", "python"],
+    "hours_estimate": 45,
+    "cost_tag": "free"
+  },
+  {
+    "id": "c012",
+    "title": "NLP with Hugging Face Transformers",
+    "url": "https://huggingface.co/learn/nlp-course/",
+    "provider": "Hugging Face",
+    "skills_covered": ["nlp", "deep_learning", "python"],
+    "hours_estimate": 25,
+    "cost_tag": "free"
+  },
+  {
+    "id": "c013",
+    "title": "MLOps Specialization",
+    "url": "https://www.coursera.org/specializations/mlops-fundamentals",
+    "provider": "Coursera / DeepLearning.AI",
+    "skills_covered": ["ml_ops", "cloud_ml"],
+    "hours_estimate": 48,
+    "cost_tag": "free"
+  },
+  {
+    "id": "c014",
+    "title": "React – The Complete Guide 2024",
+    "url": "https://www.udemy.com/course/react-the-complete-guide-incl-redux/",
+    "provider": "Udemy",
+    "skills_covered": ["react", "javascript", "state_management"],
+    "hours_estimate": 48,
+    "cost_tag": "paid"
+  },
+  {
+    "id": "c015",
+    "title": "TypeScript: The Complete Developer's Guide",
+    "url": "https://www.udemy.com/course/typescript-the-complete-developers-guide/",
+    "provider": "Udemy",
+    "skills_covered": ["typescript", "javascript"],
+    "hours_estimate": 27,
+    "cost_tag": "paid"
+  },
+  {
+    "id": "c016",
+    "title": "CSS for JavaScript Developers",
+    "url": "https://css-for-js.dev/",
+    "provider": "Josh W. Comeau",
+    "skills_covered": ["css", "html"],
+    "hours_estimate": 30,
+    "cost_tag": "paid"
+  },
+  {
+    "id": "c017",
+    "title": "Testing JavaScript with Kent C. Dodds",
+    "url": "https://testingjavascript.com/",
+    "provider": "Kent C. Dodds",
+    "skills_covered": ["testing_frontend"],
+    "hours_estimate": 20,
+    "cost_tag": "paid"
+  },
+  {
+    "id": "c018",
+    "title": "Next.js 14 & React – The Complete Guide",
+    "url": "https://www.udemy.com/course/nextjs-react-the-complete-guide/",
+    "provider": "Udemy",
+    "skills_covered": ["react", "api_integration", "build_tools"],
+    "hours_estimate": 36,
+    "cost_tag": "paid"
+  },
+  {
+    "id": "c019",
+    "title": "Web Performance Fundamentals",
+    "url": "https://frontendmasters.com/courses/web-performance/",
+    "provider": "Frontend Masters",
+    "skills_covered": ["performance", "build_tools"],
+    "hours_estimate": 8,
+    "cost_tag": "paid"
+  },
+  {
+    "id": "c020",
+    "title": "Product Management Fundamentals",
+    "url": "https://www.coursera.org/learn/product-management",
+    "provider": "Coursera",
+    "skills_covered": ["product_strategy", "prd_writing", "agile"],
+    "hours_estimate": 20,
+    "cost_tag": "free"
+  },
+  {
+    "id": "c021",
+    "title": "Agile with Atlassian Jira",
+    "url": "https://www.coursera.org/learn/agile-atlassian-jira",
+    "provider": "Coursera / Atlassian",
+    "skills_covered": ["agile"],
+    "hours_estimate": 12,
+    "cost_tag": "free"
+  },
+  {
+    "id": "c022",
+    "title": "UX Research & Design Specialization",
+    "url": "https://www.coursera.org/specializations/ux-design",
+    "provider": "Coursera / Michigan",
+    "skills_covered": ["user_research", "ux_design"],
+    "hours_estimate": 60,
+    "cost_tag": "free"
+  },
+  {
+    "id": "c023",
+    "title": "SQL – Complete Introduction to Databases",
+    "url": "https://www.udemy.com/course/the-ultimate-mysql-bootcamp-go-from-sql-beginner-to-expert/",
+    "provider": "Udemy",
+    "skills_covered": ["sql", "data_analysis_pm"],
+    "hours_estimate": 22,
+    "cost_tag": "paid"
+  },
+  {
+    "id": "c024",
+    "title": "Linux Command Line Basics",
+    "url": "https://www.udemy.com/course/linux-command-line-tutorial/",
+    "provider": "Udemy",
+    "skills_covered": ["linux", "bash"],
+    "hours_estimate": 10,
+    "cost_tag": "paid"
+  },
+  {
+    "id": "c025",
+    "title": "Prometheus & Grafana: Complete Hands-On for Monitoring",
+    "url": "https://www.udemy.com/course/prometheus-course/",
+    "provider": "Udemy",
+    "skills_covered": ["monitoring"],
+    "hours_estimate": 12,
+    "cost_tag": "paid"
+  },
+  {
+    "id": "c026",
+    "title": "Git & GitHub Bootcamp",
+    "url": "https://www.udemy.com/course/git-and-github-bootcamp/",
+    "provider": "Udemy",
+    "skills_covered": ["git"],
+    "hours_estimate": 12,
+    "cost_tag": "paid"
+  },
+  {
+    "id": "c027",
+    "title": "Networking Fundamentals (CompTIA Network+)",
+    "url": "https://www.professormesser.com/network-plus/n10-008/n10-008-video/n10-008-training-course/",
+    "provider": "Professor Messer",
+    "skills_covered": ["networking"],
+    "hours_estimate": 30,
+    "cost_tag": "free"
+  },
+  {
+    "id": "c028",
+    "title": "Data Visualization with Tableau",
+    "url": "https://www.coursera.org/specializations/data-visualization",
+    "provider": "Coursera / UC Davis",
+    "skills_covered": ["data_viz"],
+    "hours_estimate": 30,
+    "cost_tag": "free"
+  },
+  {
+    "id": "c029",
+    "title": "Stakeholder Management & Communication for PMs",
+    "url": "https://www.linkedin.com/learning/project-management-foundations-stakeholders",
+    "provider": "LinkedIn Learning",
+    "skills_covered": ["stakeholder_mgmt", "go_to_market"],
+    "hours_estimate": 6,
+    "cost_tag": "paid"
+  },
+  {
+    "id": "c030",
+    "title": "DevSecOps: CI/CD Security Practices",
+    "url": "https://www.udemy.com/course/devsecops/",
+    "provider": "Udemy",
+    "skills_covered": ["security_devops", "cicd"],
+    "hours_estimate": 14,
+    "cost_tag": "paid"
+  }
+]
