@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from "react";
 
-export const dynamic = 'force-dynamic';
-
 interface MockQuestion {
   question: string;
   one_line_answer: string;

@@ -86,6 +86,8 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<AnalyzeResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [activeRole, setActiveRole] = useState<string | null>(null);
+  const [expandedQ, setExpandedQ] = useState<number | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState<AnalyzeResult | null>(null);
   const [inputMode, setInputMode] = useState<"resume" | "json">("resume");
@@ -152,6 +154,12 @@ export default function Home() {
           throw new Error(err.detail || 'Failed to extract text from file');
         }
         const data = await resp.json();
+        console.log('Extracted text length:', data.text?.length || 0);
+        if (!data.text || !data.text.trim()) {
+          setError('No text could be extracted from the file. Please try pasting the resume text directly in the textarea below.');
+          setIsProcessingFile(false);
+          return;
+        }
         console.log('Extracted text:', data.text.substring(0, 100) + '...');
         setResumeText(data.text);
         setIsProcessingFile(false);

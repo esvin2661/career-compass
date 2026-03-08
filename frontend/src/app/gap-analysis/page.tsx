@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from "react";
 
-export const dynamic = 'force-dynamic';
-
 interface Skill {
   skill_id: string;
   label: string;
