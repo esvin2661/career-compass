@@ -1,3 +1,5 @@
+# Presentation: https://youtu.be/tQohYJQnqS0
+
 # Career Compass – Skill Gap Analyzer & Learning Roadmap
 
 > Paste a resume → get skill gaps, a personalized learning roadmap, and mock interview questions.
