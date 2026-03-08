@@ -41,6 +41,7 @@ export default function RoadmapPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const [personalizedIntro, setPersonalizedIntro] = useState<string | null>(null);
 
   useEffect(() => {
     // try load a roadmap from the most recent analysis
@@ -51,12 +52,39 @@ export default function RoadmapPage() {
         const choice: Roadmap | undefined = data.selected_roadmaps?.[role];
         if (choice) {
           setRoadmap(choice);
+
+          // Generate personalized introduction
+          generatePersonalizedIntro(data, choice);
         }
       } catch {}
     }
     // no fallback
     setLoading(false);
   }, [role]);
+
+  const generatePersonalizedIntro = async (analysisData: any, roadmapData: any) => {
+    try {
+      const response = await fetch(`${API_BASE}/generate-roadmap-intro`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          role_name: role,
+          user_profile: analysisData.profile,
+          skills_data: {
+            total_hours: roadmapData.total_hours,
+            estimated_weeks: roadmapData.estimated_weeks,
+            item_count: roadmapData.recommended_items.length
+          },
+        }),
+      });
+      const result = await response.json();
+      setPersonalizedIntro(result.introduction);
+    } catch (error) {
+      console.warn('Failed to generate personalized introduction:', error);
+    }
+  };
 
   if (roadmap === null) {
     return (
@@ -115,6 +143,11 @@ export default function RoadmapPage() {
           <p className="text-muted text-lg">
             Your personalized learning path to become a {role}. Complete in ~{roadmap.estimated_weeks} weeks.
           </p>
+          {personalizedIntro && (
+            <div className="mt-4 p-4 bg-accent/5 border border-accent/20 rounded-xl">
+              <p className="text-ink text-base leading-relaxed">{personalizedIntro}</p>
+            </div>
+          )}
         </div>
 
         {/* Summary Stats */}

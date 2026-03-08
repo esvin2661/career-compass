@@ -34,6 +34,7 @@ export default function GapAnalysisPage() {
   const [selectedJob, setSelectedJob] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [personalizedSummary, setPersonalizedSummary] = useState<string | null>(null);
 
   useEffect(() => {
     // try load analysis from storage and compute job list
@@ -57,12 +58,40 @@ export default function GapAnalysisPage() {
             }
           ];
           setJobDescriptions(sampleJobs);
+
+          // Generate personalized summary
+          generatePersonalizedSummary(data, roleRec);
         }
       } catch {}
     }
     // no fallback
     setLoading(false);
   }, [role]);
+
+  const generatePersonalizedSummary = async (analysisData: any, roleData: any) => {
+    try {
+      const response = await fetch(`${API_BASE}/generate-gap-summary`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          role_name: role,
+          user_profile: analysisData.profile,
+          skills_data: {
+            matched_skills: roleData.matched_skills,
+            missing_core_skills: roleData.missing_core_skills,
+            missing_optional_skills: roleData.missing_optional_skills,
+            match_score: roleData.match_score
+          }
+        }),
+      });
+      const result = await response.json();
+      setPersonalizedSummary(result.summary);
+    } catch (error) {
+      console.warn('Failed to generate personalized summary:', error);
+    }
+  };
 
   const getScoreColor = (score: number) => {
     if (score >= 80) return "text-teal";
@@ -127,6 +156,11 @@ export default function GapAnalysisPage() {
           <p className="text-muted text-lg">
             Compare your skills against {jobDescriptions.length}+ real job descriptions to identify gaps and opportunities.
           </p>
+          {personalizedSummary && (
+            <div className="mt-4 p-4 bg-accent/5 border border-accent/20 rounded-xl">
+              <p className="text-ink text-base leading-relaxed">{personalizedSummary}</p>
+            </div>
+          )}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

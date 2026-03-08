@@ -22,6 +22,7 @@ export default function MockInterviewPage() {
   const [showAnswer, setShowAnswer] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [personalizedIntro, setPersonalizedIntro] = useState<string | null>(null);
 
   useEffect(() => {
     // try load last analysis from storage
@@ -31,11 +32,34 @@ export default function MockInterviewPage() {
         const data = JSON.parse(stored);
         const qi: MockQuestion[] = data.mock_questions || [];
         setQuestions(qi.length ? qi : []);
+
+        // Generate personalized introduction
+        generatePersonalizedIntro(data);
       } catch {}
     }
     // no fallback static questions
     setLoading(false);
   }, [role]);
+
+  const generatePersonalizedIntro = async (analysisData: any) => {
+    try {
+      const response = await fetch(`${API_BASE}/generate-interview-intro`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          role_name: role,
+          user_profile: analysisData.profile,
+          skills_data: {},
+        }),
+      });
+      const result = await response.json();
+      setPersonalizedIntro(result.introduction);
+    } catch (error) {
+      console.warn('Failed to generate personalized introduction:', error);
+    }
+  };
 
   if (loading) {
     return (
@@ -106,6 +130,11 @@ export default function MockInterviewPage() {
             <p className="text-muted">
               Practice your interview skills with tailored questions for this role.
             </p>
+            {personalizedIntro && (
+              <div className="mt-4 p-4 bg-accent/5 border border-accent/20 rounded-xl">
+                <p className="text-ink text-base leading-relaxed">{personalizedIntro}</p>
+              </div>
+            )}
           </div>
 
           {/* Question Card */}

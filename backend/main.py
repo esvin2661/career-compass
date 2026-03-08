@@ -398,6 +398,110 @@ async def analyze(req: AnalyzeRequest):
     return AnalyzeResponse(**result_dict)
 
 
+# ── Additional Content Generation Endpoints ──────────────────────────────────
+
+class ContentRequest(BaseModel):
+    role_name: str
+    user_profile: dict
+    skills_data: dict
+    context: str = Field(default="")
+
+
+@app.post("/generate-gap-summary")
+async def generate_gap_summary(req: ContentRequest):
+    """Generate a personalized summary for the gap analysis page."""
+    llm = STATE.get("llm")
+    if not llm:
+        return {"summary": "Gap analysis shows your current skill level compared to job requirements. Review the matched and missing skills below to understand your career progression opportunities."}
+
+    try:
+        from langchain_core.prompts import PromptTemplate
+        prompt = PromptTemplate(
+            input_variables=["role_name", "profile", "skills"],
+            template=(
+                "Based on this user's profile and skills analysis for the {role_name} role, "
+                "write a personalized 2-3 sentence summary explaining their gap analysis results. "
+                "Focus on their strengths, key gaps, and next steps. Be encouraging and actionable.\n\n"
+                "User Profile: {profile}\n"
+                "Skills Analysis: {skills}\n\n"
+                "Summary:"
+            ),
+        )
+        chain = prompt | llm
+        result = await chain.ainvoke({
+            "role_name": req.role_name,
+            "profile": json.dumps(req.user_profile),
+            "skills": json.dumps(req.skills_data),
+        })
+        return {"summary": result.content.strip()}
+    except Exception as e:
+        logger.warning(f"Gap summary generation failed: {e}")
+        return {"summary": f"Your gap analysis for {req.role_name} reveals important insights about your current skill level and areas for growth."}
+
+
+@app.post("/generate-interview-intro")
+async def generate_interview_intro(req: ContentRequest):
+    """Generate a personalized introduction for the mock interview page."""
+    llm = STATE.get("llm")
+    if not llm:
+        return {"introduction": f"Practice your interview skills for the {req.role_name} position with these tailored questions based on your profile."}
+
+    try:
+        from langchain_core.prompts import PromptTemplate
+        prompt = PromptTemplate(
+            input_variables=["role_name", "profile", "level"],
+            template=(
+                "Write a personalized 2-3 sentence introduction for a mock interview practice page. "
+                "The user is preparing for {role_name} interviews at a {level} level. "
+                "Make it encouraging, explain the value of practice, and mention that questions are tailored to their background.\n\n"
+                "User Profile Summary: {profile}\n\n"
+                "Introduction:"
+            ),
+        )
+        chain = prompt | llm
+        result = await chain.ainvoke({
+            "role_name": req.role_name,
+            "profile": json.dumps(req.user_profile),
+            "level": req.user_profile.get("seniority_inferred", "mid-level"),
+        })
+        return {"introduction": result.content.strip()}
+    except Exception as e:
+        logger.warning(f"Interview intro generation failed: {e}")
+        return {"introduction": f"Sharpen your interview skills for {req.role_name} with these personalized practice questions."}
+
+
+@app.post("/generate-roadmap-intro")
+async def generate_roadmap_intro(req: ContentRequest):
+    """Generate a personalized introduction for the learning roadmap page."""
+    llm = STATE.get("llm")
+    if not llm:
+        return {"introduction": f"Your personalized learning roadmap for becoming a {req.role_name}, designed around your current skills and available time."}
+
+    try:
+        from langchain_core.prompts import PromptTemplate
+        prompt = PromptTemplate(
+            input_variables=["role_name", "profile", "roadmap"],
+            template=(
+                "Write a personalized 2-3 sentence introduction for a learning roadmap page. "
+                "The user wants to become a {role_name} and has this learning plan. "
+                "Make it motivating, explain the plan's structure, and emphasize how it's customized to their background.\n\n"
+                "User Profile: {profile}\n"
+                "Roadmap Summary: {roadmap}\n\n"
+                "Introduction:"
+            ),
+        )
+        chain = prompt | llm
+        result = await chain.ainvoke({
+            "role_name": req.role_name,
+            "profile": json.dumps(req.user_profile),
+            "roadmap": json.dumps(req.skills_data),
+        })
+        return {"introduction": result.content.strip()}
+    except Exception as e:
+        logger.warning(f"Roadmap intro generation failed: {e}")
+        return {"introduction": f"Follow this customized learning path to advance your career as a {req.role_name}."}
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
