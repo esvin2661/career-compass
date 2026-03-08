@@ -1,0 +1,41 @@
+{
+  "role_id": "backend_developer",
+  "display_name": "Backend Developer",
+  "job_snippets": [
+    "Design and implement robust backend services and APIs using modern frameworks and languages.",
+    "Develop and maintain database schemas, queries, and data models for high-performance applications.",
+    "Implement authentication and authorization systems with secure token management.",
+    "Build scalable microservices and serverless functions for distributed systems.",
+    "Optimize database performance through indexing, query optimization, and caching strategies.",
+    "Implement real-time features using WebSockets, Server-Sent Events, or message queues.",
+    "Design and implement RESTful and GraphQL APIs with proper error handling and validation.",
+    "Work with cloud platforms to deploy and manage backend infrastructure.",
+    "Implement automated testing for backend services including unit and integration tests.",
+    "Monitor application performance and implement logging and alerting systems.",
+    "Handle data processing pipelines and background job processing.",
+    "Implement security best practices including input validation, SQL injection prevention, and XSS protection.",
+    "Work with containerization and orchestration technologies for deployment.",
+    "Optimize application performance through profiling and bottleneck identification.",
+    "Implement rate limiting, throttling, and API versioning strategies.",
+    "Work with message queues and event-driven architectures.",
+    "Handle file storage and content delivery networks (CDN) integration.",
+    "Implement data backup and disaster recovery procedures.",
+    "Collaborate with frontend developers on API design and integration.",
+    "Stay current with backend technologies and contribute to technical innovation."
+  ],
+  "skill_list": [
+    {"skill_id": "backend_languages", "label": "Backend Languages", "importance": "core", "synonyms": ["python", "java", "nodejs", "go", "c#", "php", "ruby", "kotlin"]},
+    {"skill_id": "databases", "label": "Databases", "importance": "core", "synonyms": ["postgresql", "mysql", "mongodb", "redis", "elasticsearch", "dynamodb", "oracle"]},
+    {"skill_id": "api_design", "label": "API Design", "importance": "core", "synonyms": ["rest api", "graphql", "api design", "openapi", "swagger", "fastapi", "express"]},
+    {"skill_id": "authentication", "label": "Authentication & Security", "importance": "core", "synonyms": ["jwt", "oauth", "authentication", "authorization", "security", "bcrypt", "ssl/tls"]},
+    {"skill_id": "testing_backend", "label": "Backend Testing", "importance": "core", "synonyms": ["unit testing", "integration testing", "pytest", "junit", "mocha", "jest"]},
+    {"skill_id": "cloud_services", "label": "Cloud Services", "importance": "core", "synonyms": ["aws", "azure", "gcp", "cloud computing", "serverless", "lambda", "ec2"]},
+    {"skill_id": "frameworks", "label": "Backend Frameworks", "importance": "optional", "synonyms": ["django", "flask", "spring boot", "express.js", "fastapi", "laravel", "rails"]},
+    {"skill_id": "message_queues", "label": "Message Queues", "importance": "optional", "synonyms": ["rabbitmq", "kafka", "sqs", "redis pub/sub", "message queuing"]},
+    {"skill_id": "caching", "label": "Caching", "importance": "optional", "synonyms": ["redis", "memcached", "caching strategies", "cache invalidation"]},
+    {"skill_id": "monitoring", "label": "Monitoring & Logging", "importance": "optional", "synonyms": ["monitoring", "logging", "prometheus", "grafana", "elk stack", "datadog"]},
+    {"skill_id": "containerization", "label": "Containerization", "importance": "optional", "synonyms": ["docker", "kubernetes", "container orchestration", "docker compose"]},
+    {"skill_id": "performance", "label": "Performance Optimization", "importance": "optional", "synonyms": ["performance", "optimization", "profiling", "load testing", "scalability"]},
+    {"skill_id": "async_programming", "label": "Asynchronous Programming", "importance": "optional", "synonyms": ["async/await", "concurrency", "multithreading", "asyncio", "coroutines"]}
+  ]
+}

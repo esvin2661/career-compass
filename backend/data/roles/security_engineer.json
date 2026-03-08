@@ -1,0 +1,40 @@
+{
+  "role_id": "security_engineer",
+  "display_name": "Security Engineer",
+  "job_snippets": [
+    "Design and implement comprehensive security architectures for applications and infrastructure.",
+    "Conduct security assessments, vulnerability scans, and penetration testing.",
+    "Implement and maintain security controls including firewalls, IDS/IPS, and access controls.",
+    "Develop and enforce security policies, standards, and best practices.",
+    "Monitor security events and respond to security incidents.",
+    "Implement encryption solutions for data at rest and in transit.",
+    "Configure and manage identity and access management systems.",
+    "Perform security code reviews and implement secure coding practices.",
+    "Work with compliance frameworks like SOC 2, ISO 27001, and GDPR.",
+    "Implement secure CI/CD pipelines and DevSecOps practices.",
+    "Conduct security awareness training and educate development teams.",
+    "Manage security tools and technologies including SIEM, EDR, and vulnerability scanners.",
+    "Design and implement incident response and disaster recovery plans.",
+    "Perform threat modeling and risk assessments for new systems.",
+    "Implement network security controls and segmentation strategies.",
+    "Work with cloud security services and configure secure cloud architectures.",
+    "Monitor and respond to security threats and vulnerabilities.",
+    "Document security architectures and maintain security documentation.",
+    "Stay current with emerging security threats and implement proactive defenses.",
+    "Collaborate with development and operations teams on security initiatives."
+  ],
+  "skill_list": [
+    {"skill_id": "cybersecurity", "label": "Cybersecurity", "importance": "core", "synonyms": ["cybersecurity", "information security", "it security", "security engineering"]},
+    {"skill_id": "network_security", "label": "Network Security", "importance": "core", "synonyms": ["network security", "firewalls", "ids/ips", "vpn", "network segmentation"]},
+    {"skill_id": "application_security", "label": "Application Security", "importance": "core", "synonyms": ["application security", "secure coding", "owasp", "sast", "dast"]},
+    {"skill_id": "cloud_security", "label": "Cloud Security", "importance": "core", "synonyms": ["cloud security", "aws security", "azure security", "gcp security", "iam"]},
+    {"skill_id": "penetration_testing", "label": "Penetration Testing", "importance": "core", "synonyms": ["pen testing", "ethical hacking", "vulnerability assessment", "red teaming"]},
+    {"skill_id": "compliance", "label": "Compliance & Governance", "importance": "core", "synonyms": ["compliance", "soc 2", "iso 27001", "gdpr", "hipaa", "pci dss"]},
+    {"skill_id": "encryption", "label": "Cryptography & Encryption", "importance": "optional", "synonyms": ["encryption", "cryptography", "ssl/tls", "hashing", "digital signatures"]},
+    {"skill_id": "incident_response", "label": "Incident Response", "importance": "optional", "synonyms": ["incident response", "forensics", "threat hunting", "security operations"]},
+    {"skill_id": "devsecops", "label": "DevSecOps", "importance": "optional", "synonyms": ["devsecops", "security automation", "ci/cd security", "infrastructure as code security"]},
+    {"skill_id": "monitoring", "label": "Security Monitoring", "importance": "optional", "synonyms": ["siem", "edr", "log analysis", "threat detection", "security analytics"]},
+    {"skill_id": "identity_management", "label": "Identity Management", "importance": "optional", "synonyms": ["iam", "oauth", "saml", "ldap", "active directory", "zero trust"]},
+    {"skill_id": "risk_assessment", "label": "Risk Assessment", "importance": "optional", "synonyms": ["risk assessment", "threat modeling", "vulnerability management", "security audits"]}
+  ]
+}

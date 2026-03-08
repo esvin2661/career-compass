@@ -1,0 +1,42 @@
+{
+  "role_id": "full_stack_developer",
+  "display_name": "Full Stack Developer",
+  "job_snippets": [
+    "Develop end-to-end web applications from database design to user interface implementation.",
+    "Build responsive, interactive user interfaces using modern frontend frameworks and libraries.",
+    "Design and implement RESTful APIs and backend services with proper authentication and validation.",
+    "Work with databases to create efficient data models, queries, and relationships.",
+    "Implement user authentication, authorization, and session management across the full stack.",
+    "Optimize application performance on both frontend and backend components.",
+    "Write comprehensive tests for both client-side and server-side code.",
+    "Deploy applications to cloud platforms with proper CI/CD pipelines.",
+    "Implement real-time features using WebSockets or server-sent events.",
+    "Work with version control systems and collaborate effectively in development teams.",
+    "Create responsive designs that work across desktop, tablet, and mobile devices.",
+    "Implement security best practices including input validation, XSS prevention, and CSRF protection.",
+    "Integrate third-party APIs and services into full-stack applications.",
+    "Monitor application performance and implement logging and error tracking.",
+    "Work with containerization technologies for consistent development and deployment environments.",
+    "Implement state management solutions for complex frontend applications.",
+    "Design database schemas and optimize queries for performance and scalability.",
+    "Create reusable components and establish frontend design systems.",
+    "Handle file uploads, storage, and content delivery optimization.",
+    "Stay current with both frontend and backend technology trends and best practices."
+  ],
+  "skill_list": [
+    {"skill_id": "frontend_frameworks", "label": "Frontend Frameworks", "importance": "core", "synonyms": ["react", "vue", "angular", "next.js", "nuxt.js", "svelte"]},
+    {"skill_id": "backend_frameworks", "label": "Backend Frameworks", "importance": "core", "synonyms": ["nodejs", "django", "flask", "express", "spring boot", "laravel", "rails"]},
+    {"skill_id": "javascript", "label": "JavaScript/TypeScript", "importance": "core", "synonyms": ["javascript", "typescript", "es6", "es2015", "js", "ts"]},
+    {"skill_id": "databases", "label": "Databases", "importance": "core", "synonyms": ["postgresql", "mysql", "mongodb", "sqlite", "redis", "sql", "nosql"]},
+    {"skill_id": "html_css", "label": "HTML & CSS", "importance": "core", "synonyms": ["html", "css", "html5", "css3", "responsive design", "flexbox", "grid"]},
+    {"skill_id": "api_design", "label": "API Development", "importance": "core", "synonyms": ["rest api", "graphql", "api design", "json api", "http methods"]},
+    {"skill_id": "git", "label": "Version Control", "importance": "core", "synonyms": ["git", "github", "gitlab", "version control", "merge conflicts"]},
+    {"skill_id": "testing", "label": "Testing", "importance": "core", "synonyms": ["unit testing", "integration testing", "e2e testing", "jest", "cypress", "selenium"]},
+    {"skill_id": "deployment", "label": "Deployment & DevOps", "importance": "optional", "synonyms": ["heroku", "vercel", "netlify", "aws", "docker", "ci/cd", "github actions"]},
+    {"skill_id": "state_management", "label": "State Management", "importance": "optional", "synonyms": ["redux", "zustand", "vuex", "ngrx", "context api", "pinia"]},
+    {"skill_id": "authentication", "label": "Authentication", "importance": "optional", "synonyms": ["jwt", "oauth", "auth0", "firebase auth", "passport.js", "session management"]},
+    {"skill_id": "performance", "label": "Performance Optimization", "importance": "optional", "synonyms": ["performance", "optimization", "lazy loading", "code splitting", "caching"]},
+    {"skill_id": "security", "label": "Security", "importance": "optional", "synonyms": ["security", "owasp", "cors", "helmet", "input validation", "sql injection"]},
+    {"skill_id": "mobile_responsive", "label": "Mobile & Responsive Design", "importance": "optional", "synonyms": ["responsive design", "mobile first", "pwa", "media queries", "flexbox"]}
+  ]
+}

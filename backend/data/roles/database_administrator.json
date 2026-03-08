@@ -1,0 +1,40 @@
+{
+  "role_id": "database_administrator",
+  "display_name": "Database Administrator",
+  "job_snippets": [
+    "Design, implement, and maintain database systems for high availability and performance.",
+    "Perform database capacity planning and resource optimization.",
+    "Implement backup and recovery strategies with disaster recovery planning.",
+    "Monitor database performance and implement tuning strategies.",
+    "Manage database security including access controls and encryption.",
+    "Handle database migrations, upgrades, and version management.",
+    "Work with development teams on database schema design and optimization.",
+    "Implement database replication and high availability solutions.",
+    "Monitor and maintain database health with proactive issue resolution.",
+    "Configure and manage database clusters and distributed systems.",
+    "Implement data archiving and retention policies.",
+    "Work with ETL processes and data integration pipelines.",
+    "Perform database troubleshooting and root cause analysis.",
+    "Document database architectures and maintain technical documentation.",
+    "Implement database monitoring and alerting systems.",
+    "Work with cloud database services and managed database solutions.",
+    "Ensure database compliance with regulatory requirements.",
+    "Optimize query performance and database indexing strategies.",
+    "Manage database user accounts and permissions.",
+    "Stay current with database technologies and best practices."
+  ],
+  "skill_list": [
+    {"skill_id": "database_management", "label": "Database Management", "importance": "core", "synonyms": ["database administration", "dba", "database management", "database operations"]},
+    {"skill_id": "sql", "label": "SQL", "importance": "core", "synonyms": ["sql", "database queries", "stored procedures", "triggers", "views"]},
+    {"skill_id": "database_systems", "label": "Database Systems", "importance": "core", "synonyms": ["postgresql", "mysql", "oracle", "sql server", "mongodb", "redis", "cassandra"]},
+    {"skill_id": "performance_tuning", "label": "Performance Tuning", "importance": "core", "synonyms": ["performance tuning", "query optimization", "indexing", "database optimization"]},
+    {"skill_id": "backup_recovery", "label": "Backup & Recovery", "importance": "core", "synonyms": ["backup", "recovery", "disaster recovery", "high availability", "replication"]},
+    {"skill_id": "database_security", "label": "Database Security", "importance": "core", "synonyms": ["database security", "access control", "encryption", "auditing", "compliance"]},
+    {"skill_id": "cloud_databases", "label": "Cloud Databases", "importance": "optional", "synonyms": ["rds", "aurora", "cloud sql", "cosmos db", "managed databases", "serverless databases"]},
+    {"skill_id": "monitoring", "label": "Database Monitoring", "importance": "optional", "synonyms": ["monitoring", "alerting", "performance monitoring", "database metrics", "log analysis"]},
+    {"skill_id": "data_modeling", "label": "Data Modeling", "importance": "optional", "synonyms": ["data modeling", "database design", "normalization", "schema design", "er diagrams"]},
+    {"skill_id": "etl", "label": "ETL & Data Integration", "importance": "optional", "synonyms": ["etl", "data integration", "data pipelines", "ssis", "informatica", "talend"]},
+    {"skill_id": "scripting", "label": "Database Scripting", "importance": "optional", "synonyms": ["bash", "python", "powershell", "database scripting", "automation"]},
+    {"skill_id": "nosql", "label": "NoSQL Databases", "importance": "optional", "synonyms": ["nosql", "mongodb", "cassandra", "dynamodb", "document databases", "key-value stores"]}
+  ]
+}

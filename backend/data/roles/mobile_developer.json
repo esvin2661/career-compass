@@ -1,0 +1,41 @@
+{
+  "role_id": "mobile_developer",
+  "display_name": "Mobile Developer",
+  "job_snippets": [
+    "Develop native mobile applications for iOS and Android platforms using Swift, Kotlin, or React Native.",
+    "Design and implement intuitive user interfaces following platform-specific design guidelines.",
+    "Integrate with RESTful APIs and backend services for data synchronization and offline functionality.",
+    "Implement local data storage solutions using SQLite, Core Data, or Room databases.",
+    "Optimize application performance, memory usage, and battery consumption.",
+    "Handle push notifications, background processing, and location services.",
+    "Implement user authentication and secure data handling with encryption.",
+    "Work with device sensors, camera, and other hardware capabilities.",
+    "Create responsive layouts that adapt to different screen sizes and orientations.",
+    "Implement offline-first architecture with data synchronization capabilities.",
+    "Integrate with third-party SDKs and services (payment, analytics, social media).",
+    "Handle app store submission processes and compliance requirements.",
+    "Implement automated testing strategies including unit tests and UI tests.",
+    "Debug and resolve platform-specific issues and device compatibility problems.",
+    "Optimize app startup time, scrolling performance, and user interaction responsiveness.",
+    "Work with continuous integration and deployment pipelines for mobile apps.",
+    "Implement security best practices including certificate pinning and secure storage.",
+    "Handle app updates, versioning, and backward compatibility.",
+    "Collaborate with designers on pixel-perfect implementation of UI/UX designs.",
+    "Stay current with mobile platform updates, new APIs, and development best practices."
+  ],
+  "skill_list": [
+    {"skill_id": "mobile_platforms", "label": "Mobile Platforms", "importance": "core", "synonyms": ["ios", "android", "swift", "kotlin", "objective-c", "java"]},
+    {"skill_id": "cross_platform", "label": "Cross-Platform Development", "importance": "optional", "synonyms": ["react native", "flutter", "xamarin", "ionic", "capacitor"]},
+    {"skill_id": "ui_frameworks", "label": "UI Frameworks", "importance": "core", "synonyms": ["uikit", "swiftui", "jetpack compose", "xml layouts", "storyboards", "xib"]},
+    {"skill_id": "api_integration", "label": "API Integration", "importance": "core", "synonyms": ["rest api", "graphql", "http client", "retrofit", "alamofire", "okhttp"]},
+    {"skill_id": "local_storage", "label": "Local Storage", "importance": "core", "synonyms": ["sqlite", "core data", "room", "realm", "sharedpreferences", "userdefaults"]},
+    {"skill_id": "async_programming", "label": "Asynchronous Programming", "importance": "core", "synonyms": ["async/await", "coroutines", "rxswift", "rxjava", "promises", "callbacks"]},
+    {"skill_id": "testing_mobile", "label": "Mobile Testing", "importance": "optional", "synonyms": ["unit testing", "ui testing", "xctest", "espresso", "detox", "appium"]},
+    {"skill_id": "app_distribution", "label": "App Distribution", "importance": "optional", "synonyms": ["app store", "google play", "testflight", "beta testing", "app distribution"]},
+    {"skill_id": "performance", "label": "Performance Optimization", "importance": "optional", "synonyms": ["performance", "optimization", "memory management", "battery optimization", "app size"]},
+    {"skill_id": "security_mobile", "label": "Mobile Security", "importance": "optional", "synonyms": ["security", "encryption", "certificate pinning", "oauth", "biometric authentication"]},
+    {"skill_id": "device_features", "label": "Device Features", "importance": "optional", "synonyms": ["camera", "gps", "sensors", "notifications", "background processing", "widgets"]},
+    {"skill_id": "ci_cd_mobile", "label": "CI/CD for Mobile", "importance": "optional", "synonyms": ["fastlane", "bitrise", "github actions", "jenkins", "mobile ci/cd"]},
+    {"skill_id": "design_patterns", "label": "Design Patterns", "importance": "optional", "synonyms": ["mvvm", "mvp", "mvc", "singleton", "observer", "dependency injection"]}
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "role_id": "software_engineer",
+  "display_name": "Software Engineer",
+  "job_snippets": [
+    "Design, develop, and maintain scalable software systems using modern programming languages and frameworks.",
+    "Write clean, efficient, and well-documented code following industry best practices and design patterns.",
+    "Collaborate with cross-functional teams including product managers, designers, and other engineers.",
+    "Implement automated testing strategies including unit tests, integration tests, and CI/CD pipelines.",
+    "Optimize application performance, scalability, and reliability through code reviews and system monitoring.",
+    "Work with databases, APIs, and third-party services to build robust backend systems.",
+    "Participate in agile development processes, sprint planning, and code reviews.",
+    "Debug and troubleshoot complex software issues in production environments.",
+    "Implement security best practices and ensure compliance with industry standards.",
+    "Mentor junior developers and contribute to team knowledge sharing.",
+    "Design and implement RESTful APIs and microservices architecture.",
+    "Work with cloud platforms (AWS, Azure, GCP) for deployment and infrastructure management.",
+    "Use version control systems effectively with Git workflows and branching strategies.",
+    "Monitor application metrics, logs, and implement logging strategies.",
+    "Participate in architectural decisions and technology stack evaluations.",
+    "Ensure code quality through static analysis, linting, and automated testing.",
+    "Work with containerization technologies like Docker and orchestration with Kubernetes.",
+    "Implement caching strategies and database optimization techniques.",
+    "Handle concurrent programming and multi-threading challenges.",
+    "Stay current with emerging technologies and contribute to technical innovation."
+  ],
+  "skill_list": [
+    {"skill_id": "programming_languages", "label": "Programming Languages", "importance": "core", "synonyms": ["python", "java", "c#", "c++", "go", "rust", "kotlin", "scala"]},
+    {"skill_id": "algorithms", "label": "Algorithms & Data Structures", "importance": "core", "synonyms": ["algorithms", "data structures", "complexity analysis", "big o notation"]},
+    {"skill_id": "system_design", "label": "System Design", "importance": "core", "synonyms": ["system design", "architecture", "scalability", "distributed systems"]},
+    {"skill_id": "databases", "label": "Databases", "importance": "core", "synonyms": ["sql", "nosql", "postgresql", "mysql", "mongodb", "redis", "elasticsearch"]},
+    {"skill_id": "testing", "label": "Software Testing", "importance": "core", "synonyms": ["unit testing", "integration testing", "tdd", "bdd", "test automation"]},
+    {"skill_id": "git", "label": "Version Control", "importance": "core", "synonyms": ["git", "github", "gitlab", "bitbucket", "version control"]},
+    {"skill_id": "api_design", "label": "API Design", "importance": "core", "synonyms": ["rest api", "graphql", "api design", "microservices", "soap"]},
+    {"skill_id": "cloud_platforms", "label": "Cloud Platforms", "importance": "optional", "synonyms": ["aws", "azure", "gcp", "cloud computing", "serverless"]},
+    {"skill_id": "containerization", "label": "Containerization", "importance": "optional", "synonyms": ["docker", "kubernetes", "container orchestration", "docker compose"]},
+    {"skill_id": "ci_cd", "label": "CI/CD", "importance": "optional", "synonyms": ["jenkins", "github actions", "gitlab ci", "circleci", "continuous integration", "continuous deployment"]},
+    {"skill_id": "security", "label": "Security", "importance": "optional", "synonyms": ["cybersecurity", "owasp", "encryption", "authentication", "authorization"]},
+    {"skill_id": "monitoring", "label": "Monitoring & Logging", "importance": "optional", "synonyms": ["monitoring", "logging", "metrics", "observability", "prometheus", "grafana"]},
+    {"skill_id": "agile", "label": "Agile Methodologies", "importance": "optional", "synonyms": ["agile", "scrum", "kanban", "sprint planning", "retrospectives"]}
+  ]
+}

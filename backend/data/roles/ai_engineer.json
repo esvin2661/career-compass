@@ -1,0 +1,40 @@
+{
+  "role_id": "ai_engineer",
+  "display_name": "AI Engineer",
+  "job_snippets": [
+    "Design and implement AI/ML models and systems for production environments.",
+    "Work with large datasets to train, validate, and deploy machine learning models.",
+    "Build and maintain MLOps pipelines for model training, deployment, and monitoring.",
+    "Integrate AI capabilities into existing applications and services.",
+    "Optimize model performance, accuracy, and computational efficiency.",
+    "Collaborate with data scientists and researchers to operationalize ML research.",
+    "Implement automated machine learning workflows and hyperparameter tuning.",
+    "Deploy models to cloud platforms with proper scaling and monitoring.",
+    "Work with deep learning frameworks like TensorFlow, PyTorch, and Keras.",
+    "Handle model versioning, A/B testing, and gradual rollout strategies.",
+    "Implement computer vision, NLP, or recommendation systems.",
+    "Monitor model drift and implement retraining strategies.",
+    "Ensure AI systems are ethical, fair, and compliant with regulations.",
+    "Optimize inference latency and throughput for real-time applications.",
+    "Work with distributed computing frameworks for large-scale ML training.",
+    "Implement model explainability and interpretability features.",
+    "Handle data preprocessing, feature engineering, and data quality validation.",
+    "Collaborate with DevOps teams for CI/CD of ML pipelines.",
+    "Stay current with latest AI research and implement cutting-edge techniques.",
+    "Document AI system architectures and maintain technical specifications."
+  ],
+  "skill_list": [
+    {"skill_id": "machine_learning", "label": "Machine Learning", "importance": "core", "synonyms": ["ml", "machine learning", "supervised learning", "unsupervised learning", "reinforcement learning"]},
+    {"skill_id": "deep_learning", "label": "Deep Learning", "importance": "core", "synonyms": ["deep learning", "neural networks", "cnn", "rnn", "transformers", "gpt", "bert"]},
+    {"skill_id": "python", "label": "Python", "importance": "core", "synonyms": ["python", "pandas", "numpy", "scikit-learn", "jupyter"]},
+    {"skill_id": "ml_frameworks", "label": "ML Frameworks", "importance": "core", "synonyms": ["tensorflow", "pytorch", "keras", "scikit-learn", "xgboost", "lightgbm"]},
+    {"skill_id": "data_science", "label": "Data Science", "importance": "core", "synonyms": ["data science", "statistics", "probability", "linear algebra", "data analysis"]},
+    {"skill_id": "cloud_ml", "label": "Cloud ML Platforms", "importance": "core", "synonyms": ["aws sagemaker", "google ai platform", "azure ml", "vertex ai", "mlflow"]},
+    {"skill_id": "big_data", "label": "Big Data Technologies", "importance": "optional", "synonyms": ["spark", "hadoop", "kafka", "airflow", "distributed computing"]},
+    {"skill_id": "mlops", "label": "MLOps", "importance": "optional", "synonyms": ["mlops", "model deployment", "model monitoring", "ci/cd for ml", "model versioning"]},
+    {"skill_id": "computer_vision", "label": "Computer Vision", "importance": "optional", "synonyms": ["computer vision", "opencv", "image processing", "object detection", "image classification"]},
+    {"skill_id": "nlp", "label": "Natural Language Processing", "importance": "optional", "synonyms": ["nlp", "text processing", "sentiment analysis", "language models", "transformers"]},
+    {"skill_id": "deployment", "label": "Model Deployment", "importance": "optional", "synonyms": ["model serving", "api deployment", "docker", "kubernetes", "serverless"]},
+    {"skill_id": "ethics_ai", "label": "AI Ethics & Fairness", "importance": "optional", "synonyms": ["ai ethics", "fairness", "bias detection", "responsible ai", "explainable ai"]}
+  ]
+}

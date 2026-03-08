@@ -1,0 +1,40 @@
+{
+  "role_id": "qa_engineer",
+  "display_name": "QA Engineer",
+  "job_snippets": [
+    "Design and implement comprehensive test strategies for software applications.",
+    "Write automated test scripts using various testing frameworks and tools.",
+    "Perform manual testing including functional, regression, and exploratory testing.",
+    "Create and maintain test plans, test cases, and test documentation.",
+    "Implement CI/CD pipelines with automated testing integration.",
+    "Work with development teams to implement test-driven development practices.",
+    "Perform API testing, database testing, and integration testing.",
+    "Configure and maintain test environments and test data management.",
+    "Implement performance testing and load testing scenarios.",
+    "Work with monitoring tools to track application quality metrics.",
+    "Collaborate with developers on bug triage and resolution processes.",
+    "Implement security testing and vulnerability assessments.",
+    "Create automated test frameworks and testing utilities.",
+    "Perform cross-browser and cross-platform compatibility testing.",
+    "Work with mobile testing tools and device farms.",
+    "Implement accessibility testing and compliance validation.",
+    "Document testing procedures and maintain testing knowledge base.",
+    "Participate in agile ceremonies and sprint planning for testing activities.",
+    "Monitor test execution results and generate quality reports.",
+    "Stay current with testing tools and methodologies."
+  ],
+  "skill_list": [
+    {"skill_id": "test_automation", "label": "Test Automation", "importance": "core", "synonyms": ["test automation", "selenium", "cypress", "playwright", "appium", "testng", "junit"]},
+    {"skill_id": "manual_testing", "label": "Manual Testing", "importance": "core", "synonyms": ["manual testing", "functional testing", "regression testing", "exploratory testing", "user acceptance testing"]},
+    {"skill_id": "api_testing", "label": "API Testing", "importance": "core", "synonyms": ["api testing", "rest api testing", "graphql testing", "postman", "soapui", "rest-assured"]},
+    {"skill_id": "performance_testing", "label": "Performance Testing", "importance": "core", "synonyms": ["performance testing", "load testing", "stress testing", "jmeter", "k6", "gatling"]},
+    {"skill_id": "ci_cd", "label": "CI/CD", "importance": "core", "synonyms": ["ci/cd", "jenkins", "github actions", "gitlab ci", "circleci", "test automation in pipeline"]},
+    {"skill_id": "programming", "label": "Programming", "importance": "core", "synonyms": ["python", "javascript", "java", "c#", "scripting", "programming for testing"]},
+    {"skill_id": "test_management", "label": "Test Management", "importance": "optional", "synonyms": ["test management", "testrail", "jira", "qtest", "test case management", "test planning"]},
+    {"skill_id": "mobile_testing", "label": "Mobile Testing", "importance": "optional", "synonyms": ["mobile testing", "appium", "xctest", "espresso", "device farms", "emulators"]},
+    {"skill_id": "security_testing", "label": "Security Testing", "importance": "optional", "synonyms": ["security testing", "penetration testing", "owasp", "vulnerability scanning", "static analysis"]},
+    {"skill_id": "accessibility_testing", "label": "Accessibility Testing", "importance": "optional", "synonyms": ["accessibility testing", "wcag", "axe", "screen readers", "keyboard navigation"]},
+    {"skill_id": "database_testing", "label": "Database Testing", "importance": "optional", "synonyms": ["database testing", "sql testing", "data validation", "etl testing", "data integrity"]},
+    {"skill_id": "agile_testing", "label": "Agile Testing", "importance": "optional", "synonyms": ["agile testing", "scrum", "kanban", "bdd", "tdd", "continuous testing"]}
+  ]
+}

@@ -78,7 +78,6 @@ const Tag = ({ label, variant = "default" }: { label: string; variant?: "default
 export default function Home() {
   const [resumeText, setResumeText] = useState("");
   const [githubUrl, setGithubUrl] = useState("");
-  const [targetRoles, setTargetRoles] = useState<string[]>([]);
   const [budget, setBudget] = useState("all");
   const [hoursPerWeek, setHoursPerWeek] = useState(8);
   const [certFocus, setCertFocus] = useState(false);
@@ -173,20 +172,6 @@ export default function Home() {
 
   const resultsRef = useRef<HTMLDivElement>(null);
 
-  const ROLE_OPTIONS = [
-    { id: "cloud_engineer", label: "Cloud Engineer" },
-    { id: "data_scientist", label: "Data Scientist" },
-    { id: "frontend_dev", label: "Frontend Developer" },
-    { id: "product_manager", label: "Product Manager" },
-    { id: "devops_engineer", label: "DevOps Engineer" },
-  ];
-
-  const toggleRole = (id: string) => {
-    setTargetRoles(prev =>
-      prev.includes(id) ? prev.filter(r => r !== id) : [...prev, id]
-    );
-  };
-
   const handleAnalyze = async () => {
     setLoading(true);
     setError(null);
@@ -195,7 +180,6 @@ export default function Home() {
 
     const payload: Record<string, unknown> = {
       github_url: githubUrl || undefined,
-      target_roles: targetRoles.length > 0 ? targetRoles : undefined,
       preferences: { budget, hours_per_week: hoursPerWeek, certification_focus: certFocus },
     };
 
@@ -215,13 +199,6 @@ export default function Home() {
       }
       payload.resume_text = resumeText;
     }
-
-    // require target roles
-    // if (targetRoles.length === 0) {
-    //   setError("Please select at least one target role.");
-    //   setLoading(false);
-    //   return;
-    // }
 
     try {
       console.log('Sending analysis request to backend...');
@@ -281,24 +258,7 @@ export default function Home() {
             <span className="font-display font-700 text-lg tracking-tight text-ink">Career Compass</span>
           </div>
           <nav className="flex items-center gap-6">
-            <a
-              href="/mock-interview"
-              className="text-sm text-muted hover:text-accent transition-colors font-medium"
-            >
-              Mock Interviews
-            </a>
-            <a
-              href="/roadmap"
-              className="text-sm text-muted hover:text-accent transition-colors font-medium"
-            >
-              Learning Roadmap
-            </a>
-            <a
-              href="/gap-analysis"
-              className="text-sm text-muted hover:text-accent transition-colors font-medium"
-            >
-              Gap Analysis
-            </a>
+            {/* Navigation removed as requested */}
           </nav>
           <div className="flex items-center gap-2">
             <span className="text-xs text-muted font-mono">MVP v1.0</span>
@@ -309,57 +269,15 @@ export default function Home() {
       {/* ── HERO ── */}
       <section className="max-w-5xl mx-auto px-6 pt-16 pb-12">
         <div className="max-w-2xl">
-          <p className="font-mono text-xs text-accent uppercase tracking-widest mb-4">Skill Gap · Roadmap · Mock Interviews</p>
+          <p className="font-mono text-xs text-accent uppercase tracking-widest mb-4">Skill Gap · Learning Roadmap</p>
           <h1 className="font-display font-800 text-5xl leading-[1.05] tracking-tight text-ink mb-4">
             Know exactly<br />
             <span className="text-accent">what to learn</span><br />
             and why.
           </h1>
           <p className="text-muted text-lg leading-relaxed font-body">
-            Paste your resume, get your skill gaps, a personalized learning roadmap, and tailored mock interview questions — in seconds.
+            Paste your resume, get your skill gaps, and a personalized learning roadmap — in seconds.
           </p>
-        </div>
-
-        {/* Quick Access Tools */}
-        <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl">
-          <a
-            href="/mock-interview"
-            className="group p-6 border border-border rounded-xl hover:border-accent hover:bg-accent/5 transition-all text-center"
-          >
-            <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:bg-accent/20 transition-colors">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-accent">
-                <path d="M8 12L10 14L16 8M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" strokeWidth="2"/>
-              </svg>
-            </div>
-            <h3 className="font-display font-600 text-ink mb-1">Mock Interviews</h3>
-            <p className="text-xs text-muted">Practice with AI-generated interview questions</p>
-          </a>
-
-          <a
-            href="/roadmap"
-            className="group p-6 border border-border rounded-xl hover:border-accent hover:bg-accent/5 transition-all text-center"
-          >
-            <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:bg-accent/20 transition-colors">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-accent">
-                <path d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15M9 5C9 6.10457 9.89543 7 11 7H13C14.1046 7 15 6.10457 15 5M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5" stroke="currentColor" strokeWidth="2"/>
-              </svg>
-            </div>
-            <h3 className="font-display font-600 text-ink mb-1">Learning Roadmap</h3>
-            <p className="text-xs text-muted">Get personalized learning plans and milestones</p>
-          </a>
-
-          <a
-            href="/gap-analysis"
-            className="group p-6 border border-border rounded-xl hover:border-accent hover:bg-accent/5 transition-all text-center"
-          >
-            <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:bg-accent/20 transition-colors">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-accent">
-                <path d="M9 19V6L21 3V16M9 19C9 20.1046 8.10457 21 7 21C5.89543 21 5 20.1046 5 19C5 17.8954 5.89543 17 7 17C8.10457 17 9 17.8954 9 19ZM9 19L21 16M21 16C21 17.1046 21.8954 18 23 18C24.1046 18 25 17.1046 25 16C25 14.8954 24.1046 14 23 14C21.8954 14 21 14.8954 21 16Z" stroke="currentColor" strokeWidth="2"/>
-              </svg>
-            </div>
-            <h3 className="font-display font-600 text-ink mb-1">Gap Analysis</h3>
-            <p className="text-xs text-muted">Compare your skills against job market data</p>
-          </a>
         </div>
       </section>
 
@@ -516,27 +434,6 @@ export default function Home() {
 
             {/* Right: preferences */}
             <div className="flex flex-col gap-6">
-              <div>
-                <label className="block text-xs font-mono text-muted uppercase tracking-wider mb-3">
-                  Target Roles (optional)
-                </label>
-                <div className="flex flex-wrap gap-2">
-                  {ROLE_OPTIONS.map(r => (
-                    <button
-                      key={r.id}
-                      onClick={() => toggleRole(r.id)}
-                      className={`px-3 py-1.5 rounded-lg text-sm font-display font-600 transition-all border ${
-                        targetRoles.includes(r.id)
-                          ? "bg-ink text-paper border-ink"
-                          : "bg-paper text-ink border-border hover:border-ink"
-                      }`}
-                    >
-                      {r.label}
-                    </button>
-                  ))}
-                </div>
-                <p className="text-xs text-muted mt-2">Leave blank to auto-recommend</p>
-              </div>
 
               <div>
                 <label className="block text-xs font-mono text-muted uppercase tracking-wider mb-3">
@@ -847,6 +744,27 @@ export default function Home() {
               </section>
             )}
 
+            {/* ── Gap Analysis ── */}
+            {activeRoleData && (
+              <section className="border border-border rounded-2xl p-8 bg-white">
+                <div className="text-center">
+                  <h2 className="font-display font-700 text-xl text-ink mb-2">Deep Dive: Gap Analysis</h2>
+                  <p className="text-sm text-muted mb-6">
+                    Get a detailed breakdown of your skill gaps for the <span className="text-ink font-600">{activeRoleData.display_name}</span> role
+                  </p>
+                  <a
+                    href={`/gap-analysis?role=${encodeURIComponent(activeRoleData.display_name)}`}
+                    className="inline-flex items-center gap-3 px-6 py-3 bg-accent text-white font-display font-600 rounded-xl hover:bg-accent-dim transition-colors"
+                  >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                      <path d="M9 19V6L21 3V16M9 19C9 20.1046 8.10457 21 7 21C5.89543 21 5 20.1046 5 19C5 17.8954 5.89543 17 7 17C8.10457 17 9 17.8954 9 19ZM9 19L21 16M21 16C21 17.1046 21.8954 18 23 18C24.1046 18 25 17.1046 25 16C25 14.8954 24.1046 14 23 14C21.8954 14 21 14.8954 21 16Z" stroke="currentColor" strokeWidth="2"/>
+                    </svg>
+                    View Detailed Gap Analysis
+                  </a>
+                </div>
+              </section>
+            )}
+
             {/* ── Mock Interview ── */}
             {result.mock_questions.length > 0 && (
               <section>
@@ -882,53 +800,7 @@ export default function Home() {
               </section>
             )}
 
-            {/* ── Next Steps ── */}
-            <section className="border border-border rounded-2xl p-8 bg-white">
-              <div className="text-center mb-6">
-                <p className="font-display font-700 text-xl text-ink mb-1">Ready for the Next Step?</p>
-                <p className="text-sm text-muted">Explore your career path with our specialized tools</p>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <a
-                  href={`/mock-interview?role=${encodeURIComponent(activeRoleData?.display_name || 'Software Engineer')}`}
-                  className="group p-6 border border-border rounded-xl hover:border-accent transition-colors text-center"
-                >
-                  <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:bg-accent/20 transition-colors">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-accent">
-                      <path d="M8 12L10 14L16 8M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" strokeWidth="2"/>
-                    </svg>
-                  </div>
-                  <h3 className="font-display font-600 text-ink mb-1">Mock Interviews</h3>
-                  <p className="text-xs text-muted">Practice with tailored interview questions</p>
-                </a>
 
-                <a
-                  href={`/roadmap?role=${encodeURIComponent(activeRoleData?.display_name || 'Software Engineer')}`}
-                  className="group p-6 border border-border rounded-xl hover:border-accent transition-colors text-center"
-                >
-                  <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:bg-accent/20 transition-colors">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-accent">
-                      <path d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15M9 5C9 6.10457 9.89543 7 11 7H13C14.1046 7 15 6.10457 15 5M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5" stroke="currentColor" strokeWidth="2"/>
-                  </svg>
-                </div>
-                <h3 className="font-display font-600 text-ink mb-1">Learning Roadmap</h3>
-                <p className="text-xs text-muted">Follow your personalized learning plan</p>
-              </a>
-
-                <a
-                  href={`/gap-analysis?role=${encodeURIComponent(activeRoleData?.display_name || 'Software Engineer')}`}
-                  className="group p-6 border border-border rounded-xl hover:border-accent transition-colors text-center"
-                >
-                  <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:bg-accent/20 transition-colors">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-accent">
-                      <path d="M9 19V6L21 3V16M9 19C9 20.1046 8.10457 21 7 21C5.89543 21 5 20.1046 5 19C5 17.8954 5.89543 17 7 17C8.10457 17 9 17.8954 9 19ZM9 19L21 16M21 16C21 17.1046 21.8954 18 23 18C24.1046 18 25 17.1046 25 16C25 14.8954 24.1046 14 23 14C21.8954 14 21 14.8954 21 16Z" stroke="currentColor" strokeWidth="2"/>
-                    </svg>
-                  </div>
-                  <h3 className="font-display font-600 text-ink mb-1">Gap Analysis</h3>
-                  <p className="text-xs text-muted">Compare against 100+ job descriptions</p>
-                </a>
-              </div>
-            </section>
           </div>
         )}
       </section>
@@ -964,58 +836,12 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="space-y-3">
-              <p className="text-sm font-display font-600 text-ink text-center">What would you like to do next?</p>
-              <div className="grid grid-cols-1 gap-3">
-                <a
-                  href="/mock-interview"
-                  className="flex items-center gap-3 p-4 bg-accent/5 border border-accent/30 rounded-lg hover:bg-accent/10 transition-colors"
-                  onClick={() => setShowModal(false)}
-                >
-                  <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-accent">
-                      <path d="M8 12L10 14L16 8M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" strokeWidth="2"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="font-display font-600 text-ink text-sm">Mock Interviews</p>
-                    <p className="text-xs text-muted">Practice with personalized questions</p>
-                  </div>
-                </a>
-
-                <a
-                  href="/roadmap"
-                  className="flex items-center gap-3 p-4 bg-accent/5 border border-accent/30 rounded-lg hover:bg-accent/10 transition-colors"
-                  onClick={() => setShowModal(false)}
-                >
-                  <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-accent">
-                      <path d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15M9 5C9 6.10457 9.89543 7 11 7H13C14.1046 7 15 6.10457 15 5M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5" stroke="currentColor" strokeWidth="2"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="font-display font-600 text-ink text-sm">Learning Roadmap</p>
-                    <p className="text-xs text-muted">Get your personalized study plan</p>
-                  </div>
-                </a>
-
-                <a
-                  href="/gap-analysis"
-                  className="flex items-center gap-3 p-4 bg-accent/5 border border-accent/30 rounded-lg hover:bg-accent/10 transition-colors"
-                  onClick={() => setShowModal(false)}
-                >
-                  <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-accent">
-                      <path d="M9 19V6L21 3V16M9 19C9 20.1046 8.10457 21 7 21C5.89543 21 5 20.1046 5 19C5 17.8954 5.89543 17 7 17C8.10457 17 9 17.8954 9 19ZM9 19L21 16M21 16C21 17.1046 21.8954 18 23 18C24.1046 18 25 17.1046 25 16C25 14.8954 24.1046 14 23 14C21.8954 14 21 14.8954 21 16Z" stroke="currentColor" strokeWidth="2"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="font-display font-600 text-ink text-sm">Gap Analysis</p>
-                    <p className="text-xs text-muted">See your skill gaps vs job market</p>
-                  </div>
-                </a>
-              </div>
-            </div>
+            <button
+              onClick={() => setShowModal(false)}
+              className="w-full mt-4 py-2 text-sm text-muted hover:text-ink transition-colors"
+            >
+              View full results below
+            </button>
 
             <button
               onClick={() => setShowModal(false)}
@@ -1029,7 +855,7 @@ export default function Home() {
 
       {/* ── FOOTER ── */}
       <footer className="border-t border-border py-8 text-center">
-        <p className="text-xs text-muted font-mono">Career Compass MVP · Built with Next.js + FastAPI + OpenAI</p>
+        <p className="text-xs text-muted font-mono">Career Compass MVP · Built with Next.js + SQLite + Gemini + AWS</p>
       </footer>
     </main>
   );

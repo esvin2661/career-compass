@@ -1,0 +1,41 @@
+{
+  "role_id": "solutions_architect",
+  "display_name": "Solutions Architect",
+  "job_snippets": [
+    "Design comprehensive technical solutions that align with business objectives and technical requirements.",
+    "Create detailed architecture diagrams, system specifications, and technical documentation.",
+    "Evaluate and recommend technology stacks, frameworks, and infrastructure solutions.",
+    "Lead technical discussions with stakeholders, product teams, and engineering teams.",
+    "Ensure solutions are scalable, secure, and maintainable while meeting performance requirements.",
+    "Conduct technical assessments and provide guidance on technology adoption and migration strategies.",
+    "Collaborate with cloud architects to design hybrid and multi-cloud solutions.",
+    "Define API strategies, integration patterns, and data architecture approaches.",
+    "Perform risk assessments and develop mitigation strategies for technical implementations.",
+    "Mentor development teams on best practices, design patterns, and architectural principles.",
+    "Work with DevOps teams to establish CI/CD pipelines and infrastructure automation.",
+    "Ensure compliance with industry standards, security policies, and regulatory requirements.",
+    "Conduct proof-of-concept projects and technology evaluations.",
+    "Create cost-benefit analyses for technology investments and infrastructure decisions.",
+    "Design disaster recovery and business continuity solutions.",
+    "Establish monitoring and observability strategies for complex systems.",
+    "Lead architectural reviews and provide feedback on system designs.",
+    "Work with vendors and third-party providers to integrate external systems.",
+    "Develop technical roadmaps aligned with business strategy and market trends.",
+    "Bridge the gap between business requirements and technical implementation."
+  ],
+  "skill_list": [
+    {"skill_id": "system_architecture", "label": "System Architecture", "importance": "core", "synonyms": ["architecture", "system design", "enterprise architecture", "solution architecture"]},
+    {"skill_id": "cloud_architecture", "label": "Cloud Architecture", "importance": "core", "synonyms": ["aws architecture", "azure architecture", "gcp architecture", "cloud design", "multi-cloud"]},
+    {"skill_id": "microservices", "label": "Microservices", "importance": "core", "synonyms": ["microservices", "service-oriented architecture", "soa", "distributed systems"]},
+    {"skill_id": "api_design", "label": "API Design & Integration", "importance": "core", "synonyms": ["api design", "rest api", "graphql", "integration patterns", "api gateway"]},
+    {"skill_id": "databases", "label": "Database Design", "importance": "core", "synonyms": ["database design", "data modeling", "sql", "nosql", "data architecture"]},
+    {"skill_id": "security_architecture", "label": "Security Architecture", "importance": "core", "synonyms": ["security", "cybersecurity", "information security", "compliance", "risk assessment"]},
+    {"skill_id": "infrastructure", "label": "Infrastructure", "importance": "core", "synonyms": ["infrastructure", "networking", "servers", "virtualization", "containers"]},
+    {"skill_id": "devops", "label": "DevOps & CI/CD", "importance": "optional", "synonyms": ["devops", "ci/cd", "automation", "infrastructure as code", "terraform", "ansible"]},
+    {"skill_id": "data_architecture", "label": "Data Architecture", "importance": "optional", "synonyms": ["data architecture", "big data", "data warehousing", "etl", "data lake"]},
+    {"skill_id": "performance", "label": "Performance Engineering", "importance": "optional", "synonyms": ["performance", "scalability", "optimization", "load balancing", "caching"]},
+    {"skill_id": "leadership", "label": "Technical Leadership", "importance": "optional", "synonyms": ["leadership", "mentoring", "technical strategy", "stakeholder management"]},
+    {"skill_id": "compliance", "label": "Compliance & Governance", "importance": "optional", "synonyms": ["compliance", "governance", "audit", "regulatory requirements", "standards"]},
+    {"skill_id": "emerging_tech", "label": "Emerging Technologies", "importance": "optional", "synonyms": ["ai/ml", "blockchain", "iot", "serverless", "edge computing"]}
+  ]
+}

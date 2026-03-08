@@ -1,0 +1,40 @@
+{
+  "role_id": "ml_engineer",
+  "display_name": "Machine Learning Engineer",
+  "job_snippets": [
+    "Design and implement machine learning pipelines from data ingestion to model deployment.",
+    "Build scalable ML infrastructure and data processing systems.",
+    "Develop automated ML workflows for model training and evaluation.",
+    "Optimize ML model performance, latency, and resource utilization.",
+    "Implement feature engineering and data preprocessing pipelines.",
+    "Work with distributed computing frameworks for large-scale ML training.",
+    "Deploy and maintain ML models in production environments.",
+    "Monitor model performance and implement automated retraining systems.",
+    "Collaborate with data scientists to operationalize research models.",
+    "Build and maintain ML platform tools and internal frameworks.",
+    "Implement A/B testing frameworks for model evaluation.",
+    "Handle data quality validation and anomaly detection.",
+    "Work with cloud ML services and managed ML platforms.",
+    "Optimize inference serving for real-time and batch predictions.",
+    "Implement model versioning and experiment tracking systems.",
+    "Build data pipelines for continuous model training and updates.",
+    "Ensure ML systems are scalable, reliable, and cost-effective.",
+    "Implement security and compliance measures for ML systems.",
+    "Document ML architectures and maintain technical specifications.",
+    "Stay current with ML research and implement state-of-the-art techniques."
+  ],
+  "skill_list": [
+    {"skill_id": "ml_engineering", "label": "ML Engineering", "importance": "core", "synonyms": ["ml engineering", "ml infrastructure", "ml pipelines", "mlops"]},
+    {"skill_id": "python", "label": "Python", "importance": "core", "synonyms": ["python", "pandas", "numpy", "scikit-learn", "jupyter"]},
+    {"skill_id": "ml_frameworks", "label": "ML Frameworks", "importance": "core", "synonyms": ["tensorflow", "pytorch", "keras", "xgboost", "lightgbm"]},
+    {"skill_id": "data_engineering", "label": "Data Engineering", "importance": "core", "synonyms": ["data engineering", "etl", "data pipelines", "apache spark", "airflow"]},
+    {"skill_id": "cloud_platforms", "label": "Cloud Platforms", "importance": "core", "synonyms": ["aws", "gcp", "azure", "cloud computing", "serverless"]},
+    {"skill_id": "distributed_systems", "label": "Distributed Systems", "importance": "core", "synonyms": ["distributed computing", "spark", "hadoop", "kubernetes", "docker"]},
+    {"skill_id": "databases", "label": "Databases", "importance": "optional", "synonyms": ["sql", "nosql", "postgresql", "mongodb", "redis", "data warehousing"]},
+    {"skill_id": "monitoring", "label": "Monitoring & Logging", "importance": "optional", "synonyms": ["monitoring", "logging", "prometheus", "grafana", "elk stack"]},
+    {"skill_id": "deployment", "label": "Model Deployment", "importance": "optional", "synonyms": ["model serving", "api deployment", "kubernetes", "docker", "serverless"]},
+    {"skill_id": "automation", "label": "Automation", "importance": "optional", "synonyms": ["automation", "ci/cd", "jenkins", "github actions", "infrastructure as code"]},
+    {"skill_id": "performance", "label": "Performance Optimization", "importance": "optional", "synonyms": ["performance", "optimization", "profiling", "caching", "scalability"]},
+    {"skill_id": "security", "label": "Security", "importance": "optional", "synonyms": ["security", "encryption", "access control", "compliance", "gdpr"]}
+  ]
+}
