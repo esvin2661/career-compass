@@ -79,14 +79,15 @@ export default function Home() {
   const [resumeText, setResumeText] = useState("");
   const [githubUrl, setGithubUrl] = useState("");
   const [targetRoles, setTargetRoles] = useState<string[]>([]);
+  const [techs, setTechs] = useState<string[]>([]);
   const [budget, setBudget] = useState("all");
   const [hoursPerWeek, setHoursPerWeek] = useState(8);
   const [certFocus, setCertFocus] = useState(false);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<AnalyzeResult | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [activeRole, setActiveRole] = useState<string | null>(null);
-  const [expandedQ, setExpandedQ] = useState<number | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState<AnalyzeResult | null>(null);
   const [inputMode, setInputMode] = useState<"resume" | "json">("resume");
   const [jsonInput, setJsonInput] = useState("");
 
@@ -173,9 +174,33 @@ export default function Home() {
     { id: "devops_engineer", label: "DevOps Engineer" },
   ];
 
+  const TECH_OPTIONS = [
+    "JavaScript",
+    "TypeScript",
+    "Python",
+    "Java",
+    "C#",
+    "Go",
+    "Docker",
+    "Kubernetes",
+    "AWS",
+    "Azure",
+    "GCP",
+    "React",
+    "Node.js",
+    "SQL",
+    "NoSQL",
+  ];
+
   const toggleRole = (id: string) => {
     setTargetRoles(prev =>
       prev.includes(id) ? prev.filter(r => r !== id) : [...prev, id]
+    );
+  };
+
+  const toggleTech = (label: string) => {
+    setTechs(prev =>
+      prev.includes(label) ? prev.filter(t => t !== label) : [...prev, label]
     );
   };
 
@@ -208,6 +233,17 @@ export default function Home() {
       payload.resume_text = resumeText;
     }
 
+    // require target roles
+    // if (targetRoles.length === 0) {
+    //   setError("Please select at least one target role.");
+    //   setLoading(false);
+    //   return;
+    // }
+
+    if (techs.length > 0) {
+      payload.techs = techs;
+    }
+
     try {
       console.log('Sending analysis request to backend...');
       const resp = await fetch(`${API_BASE}/analyze`, {
@@ -215,16 +251,25 @@ export default function Home() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
+
       if (!resp.ok) {
         const err = await resp.json().catch(() => ({}));
         throw new Error(err.detail || `API error ${resp.status}`);
       }
+
       const data: AnalyzeResult = await resp.json();
       console.log('Analysis completed successfully, data saved to database');
 
       setResult(data);
       setActiveRole(data.role_recommendations[0]?.role_id || null);
-      setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
+      try {
+        localStorage.setItem('lastAnalysis', JSON.stringify(data));
+        console.log('✅ Results stored in localStorage');
+      } catch {}
+      
+      // Show success modal
+      setModalData(data);
+      setShowModal(true);
 
       // Show success message that data was saved
       console.log('✅ Analysis results saved to database successfully');
@@ -359,7 +404,7 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="p-6 grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Left: text input */}
             <div>
               {inputMode === "resume" ? (
@@ -420,6 +465,20 @@ export default function Home() {
                       </div>
                     )}
                   </div>
+
+                  {/* Manual text input */}
+                  <div className="mt-4">
+                    <label className="block text-xs font-mono text-muted uppercase tracking-wider mb-2">
+                      Or paste resume text directly
+                    </label>
+                    <textarea
+                      className="w-full h-32 bg-paper border border-border rounded-xl p-4 text-sm font-body text-ink placeholder:text-muted/60 focus:outline-none focus:ring-2 focus:ring-accent/30 resize-none"
+                      placeholder="Paste your resume text here..."
+                      value={resumeText}
+                      onChange={e => setResumeText(e.target.value)}
+                    />
+                  </div>
+
                   <div className="flex items-center gap-3">
                     <input
                       type="file"
@@ -474,10 +533,34 @@ export default function Home() {
                   onChange={e => setGithubUrl(e.target.value)}
                 />
               </div>
+
+              <div className="mt-4">
+                <label className="block text-xs font-mono text-muted uppercase tracking-wider mb-2">
+                  Technologies / Keywords (optional)
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {TECH_OPTIONS.map(t => (
+                    <button
+                      key={t}
+                      onClick={() => toggleTech(t)}
+                      className={`px-3 py-1.5 rounded-lg text-sm font-display font-600 transition-all border ${
+                        techs.includes(t)
+                          ? "bg-ink text-paper border-ink"
+                          : "bg-paper text-ink border-border hover:border-ink"
+                      }`}
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </div>
+                <p className="text-xs text-muted mt-2">
+                  Add keywords to help guide recommendations.
+                </p>
+              </div>
             </div>
 
             {/* Right: preferences */}
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-6">
               <div>
                 <label className="block text-xs font-mono text-muted uppercase tracking-wider mb-3">
                   Target Roles (optional)
@@ -552,7 +635,7 @@ export default function Home() {
               <button
                 onClick={handleAnalyze}
                 disabled={loading}
-                className="mt-auto w-full py-4 bg-ink text-paper font-display font-700 text-base rounded-xl hover:bg-accent-dim transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                className="mt-6 w-full py-4 bg-ink text-paper font-display font-700 text-base rounded-xl hover:bg-accent-dim transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3"
               >
                 {loading ? (
                   <>
@@ -892,6 +975,100 @@ export default function Home() {
               </a>
             </div>
           </section>
+        </div>
+      )}
+
+      {/* Success Modal */}
+      {showModal && modalData && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl">
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-teal/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" className="text-teal">
+                  <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" strokeWidth="2"/>
+                </svg>
+              </div>
+              <h2 className="font-display font-700 text-xl text-ink mb-2">Analysis Complete!</h2>
+              <p className="text-muted text-sm">
+                Your profile has been analyzed. Here are your top recommendations:
+              </p>
+            </div>
+
+            <div className="space-y-3 mb-6">
+              {modalData.role_recommendations.slice(0, 2).map((rec, i) => (
+                <div key={i} className="flex items-center justify-between p-3 bg-paper rounded-lg border border-border">
+                  <div>
+                    <p className="font-display font-600 text-ink text-sm">{rec.display_name}</p>
+                    <p className="text-xs text-muted">Match: {rec.match_score}%</p>
+                  </div>
+                  <ScoreBar score={rec.match_score} />
+                </div>
+              ))}
+              <p className="text-xs text-muted text-center">
+                {modalData.extracted_skills.length} skills detected
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <p className="text-sm font-display font-600 text-ink text-center">What would you like to do next?</p>
+              <div className="grid grid-cols-1 gap-3">
+                <a
+                  href="/mock-interview"
+                  className="flex items-center gap-3 p-4 bg-accent/5 border border-accent/30 rounded-lg hover:bg-accent/10 transition-colors"
+                  onClick={() => setShowModal(false)}
+                >
+                  <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-accent">
+                      <path d="M8 12L10 14L16 8M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" strokeWidth="2"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-display font-600 text-ink text-sm">Mock Interviews</p>
+                    <p className="text-xs text-muted">Practice with personalized questions</p>
+                  </div>
+                </a>
+
+                <a
+                  href="/roadmap"
+                  className="flex items-center gap-3 p-4 bg-accent/5 border border-accent/30 rounded-lg hover:bg-accent/10 transition-colors"
+                  onClick={() => setShowModal(false)}
+                >
+                  <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-accent">
+                      <path d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15M9 5C9 6.10457 9.89543 7 11 7H13C14.1046 7 15 6.10457 15 5M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5" stroke="currentColor" strokeWidth="2"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-display font-600 text-ink text-sm">Learning Roadmap</p>
+                    <p className="text-xs text-muted">Get your personalized study plan</p>
+                  </div>
+                </a>
+
+                <a
+                  href="/gap-analysis"
+                  className="flex items-center gap-3 p-4 bg-accent/5 border border-accent/30 rounded-lg hover:bg-accent/10 transition-colors"
+                  onClick={() => setShowModal(false)}
+                >
+                  <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-accent">
+                      <path d="M9 19V6L21 3V16M9 19C9 20.1046 8.10457 21 7 21C5.89543 21 5 20.1046 5 19C5 17.8954 5.89543 17 7 17C8.10457 17 9 17.8954 9 19ZM9 19L21 16M21 16C21 17.1046 21.8954 18 23 18C24.1046 18 25 17.1046 25 16C25 14.8954 24.1046 14 23 14C21.8954 14 21 14.8954 21 16Z" stroke="currentColor" strokeWidth="2"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-display font-600 text-ink text-sm">Gap Analysis</p>
+                    <p className="text-xs text-muted">See your skill gaps vs job market</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setShowModal(false)}
+              className="w-full mt-4 py-2 text-sm text-muted hover:text-ink transition-colors"
+            >
+              View full results below
+            </button>
+          </div>
         </div>
       )}
 

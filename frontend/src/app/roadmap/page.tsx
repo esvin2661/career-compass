@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+
+export const dynamic = 'force-dynamic';
 
 interface RoadmapItem {
   id: string;
@@ -31,93 +32,56 @@ interface Roadmap {
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export default function RoadmapPage() {
-  const searchParams = useSearchParams();
-  const role = searchParams.get("role") || "Software Engineer";
+  const [role, setRole] = useState("Software Engineer");
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const r = params.get("role");
+    if (r) setRole(r);
+  }, []);
   const [roadmap, setRoadmap] = useState<Roadmap | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
   useEffect(() => {
-    // For demo purposes, generate a sample roadmap
-    // In a real app, this would come from the analysis results
-    const sampleRoadmap: Roadmap = {
-      recommended_items: [
-        {
-          id: "1",
-          title: "AWS Certified Solutions Architect",
-          url: "https://aws.amazon.com/certification/",
-          provider: "Amazon Web Services",
-          skills_covered: ["Cloud Architecture", "AWS Services", "Security"],
-          hours_estimate: 80,
-          cost_tag: "paid",
-          covers_missing: ["Cloud Architecture", "AWS"],
-          priority: "core"
-        },
-        {
-          id: "2",
-          title: "Docker & Kubernetes Fundamentals",
-          url: "https://www.udemy.com/course/docker-kubernetes/",
-          provider: "Udemy",
-          skills_covered: ["Containerization", "Orchestration", "DevOps"],
-          hours_estimate: 12,
-          cost_tag: "paid",
-          covers_missing: ["Docker", "Kubernetes"],
-          priority: "core"
-        },
-        {
-          id: "3",
-          title: "Python for Data Science",
-          url: "https://www.coursera.org/learn/python-for-data-science",
-          provider: "Coursera",
-          skills_covered: ["Python", "Data Analysis", "Pandas"],
-          hours_estimate: 20,
-          cost_tag: "free",
-          covers_missing: ["Python", "Data Science"],
-          priority: "optional"
+    // try load a roadmap from the most recent analysis
+    const stored = localStorage.getItem('lastAnalysis');
+    if (stored) {
+      try {
+        const data = JSON.parse(stored);
+        const choice: Roadmap | undefined = data.selected_roadmaps?.[role];
+        if (choice) {
+          setRoadmap(choice);
         }
-      ],
-      weekly_milestones: [
-        {
-          week_range: "Weeks 1-2",
-          items: ["1"],
-          total_hours: 80
-        },
-        {
-          week_range: "Weeks 3-4",
-          items: ["2"],
-          total_hours: 12
-        },
-        {
-          week_range: "Weeks 5-8",
-          items: ["3"],
-          total_hours: 20
-        }
-      ],
-      total_hours: 112,
-      estimated_weeks: 8
-    };
-
-    setRoadmap(sampleRoadmap);
+      } catch {}
+    }
+    // no fallback
     setLoading(false);
   }, [role]);
 
-  if (loading) {
+  if (roadmap === null) {
     return (
       <div className="min-h-screen bg-paper flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin w-8 h-8 border-4 border-accent border-t-transparent rounded-full mx-auto mb-4"></div>
-          <p className="text-muted">Loading roadmap...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen bg-paper flex items-center justify-center">
-        <div className="text-center text-red-600">
-          <p>Error: {error}</p>
+        <div className="text-center max-w-md">
+          <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" className="text-accent">
+              <path d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15M9 5C9 6.10457 9.89543 7 11 7H13C14.1046 7 15 6.10457 15 5M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5" stroke="currentColor" strokeWidth="2"/>
+            </svg>
+          </div>
+          <h2 className="font-display font-700 text-xl text-ink mb-2">No Roadmap Yet</h2>
+          <p className="text-muted text-sm mb-6">
+            Upload your resume and run an analysis to get a personalized learning roadmap tailored to your skill gaps.
+          </p>
+          <a
+            href="/"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-white font-display font-600 rounded-lg hover:bg-accent-dim transition-colors"
+          >
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M9 1L11.5 7H17L12.5 10.5L14 17L9 13L4 17L5.5 10.5L1 7H6.5L9 1Z" fill="currentColor"/>
+            </svg>
+            Analyze My Profile
+          </a>
         </div>
       </div>
     );

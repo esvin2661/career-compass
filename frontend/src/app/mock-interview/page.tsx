@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+
+export const dynamic = 'force-dynamic';
 
 interface MockQuestion {
   question: string;
@@ -11,8 +12,13 @@ interface MockQuestion {
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export default function MockInterviewPage() {
-  const searchParams = useSearchParams();
-  const role = searchParams.get("role") || "Software Engineer";
+  const [role, setRole] = useState("Software Engineer");
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const r = params.get("role");
+    if (r) setRole(r);
+  }, []);
   const [questions, setQuestions] = useState<MockQuestion[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
@@ -20,30 +26,16 @@ export default function MockInterviewPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // For now, generate mock questions. In a real app, this would come from the analysis
-    const mockQuestions: MockQuestion[] = [
-      {
-        question: `Tell me about a challenging ${role} project you've worked on and how you overcame the difficulties.`,
-        one_line_answer: "Describe a specific project, the challenges faced, and the solution implemented."
-      },
-      {
-        question: "What are your strengths and weaknesses as a developer?",
-        one_line_answer: "Focus on strengths relevant to the role and show self-awareness about areas for improvement."
-      },
-      {
-        question: `How do you stay updated with the latest trends in ${role} technologies?`,
-        one_line_answer: "Mention specific resources, communities, or practices you follow regularly."
-      },
-      {
-        question: "Describe a time when you had to learn a new technology quickly.",
-        one_line_answer: "Explain the situation, your approach to learning, and the outcome."
-      },
-      {
-        question: "How do you handle conflicting priorities or tight deadlines?",
-        one_line_answer: "Discuss your prioritization framework and communication strategies."
-      }
-    ];
-    setQuestions(mockQuestions);
+    // try load last analysis from storage
+    const stored = localStorage.getItem('lastAnalysis');
+    if (stored) {
+      try {
+        const data = JSON.parse(stored);
+        const qi: MockQuestion[] = data.mock_questions || [];
+        setQuestions(qi.length ? qi : []);
+      } catch {}
+    }
+    // no fallback static questions
     setLoading(false);
   }, [role]);
 
@@ -58,11 +50,28 @@ export default function MockInterviewPage() {
     );
   }
 
-  if (error) {
+  if (questions.length === 0) {
     return (
       <div className="min-h-screen bg-paper flex items-center justify-center">
-        <div className="text-center text-red-600">
-          <p>Error: {error}</p>
+        <div className="text-center max-w-md">
+          <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" className="text-accent">
+              <path d="M8 12L10 14L16 8M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" strokeWidth="2"/>
+            </svg>
+          </div>
+          <h2 className="font-display font-700 text-xl text-ink mb-2">No Interview Questions Yet</h2>
+          <p className="text-muted text-sm mb-6">
+            Upload your resume and run an analysis to get personalized mock interview questions tailored to your profile.
+          </p>
+          <a
+            href="/"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-white font-display font-600 rounded-lg hover:bg-accent-dim transition-colors"
+          >
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M9 1L11.5 7H17L12.5 10.5L14 17L9 13L4 17L5.5 10.5L1 7H6.5L9 1Z" fill="currentColor"/>
+            </svg>
+            Analyze My Profile
+          </a>
         </div>
       </div>
     );

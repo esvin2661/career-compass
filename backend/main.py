@@ -132,6 +132,7 @@ class AnalyzeRequest(BaseModel):
     synthetic_profile: Optional[dict] = None
     github_url: Optional[str] = None
     target_roles: Optional[list[str]] = None
+    techs: Optional[list[str]] = None
     preferences: Optional[Preferences] = None
 
 
@@ -181,13 +182,14 @@ async def list_analyses(limit: int = 20):
     # decode JSON fields before returning
     parsed = []
     for r in rows:
-        _id, ts, resume, gh, roles, prefs, result = r
+        _id, ts, resume, gh, roles, prefs, techs, result = r
         parsed.append({
             "id": _id,
             "timestamp": ts,
             "resume_text": resume,
             "github_url": gh,
             "target_roles": json.loads(roles) if roles else None,
+            "techs": json.loads(techs) if techs else None,
             "preferences": json.loads(prefs) if prefs else None,
             "result": json.loads(result) if result else None,
         })
@@ -373,6 +375,7 @@ async def analyze(req: AnalyzeRequest):
             resume_text=req.resume_text,
             github_url=req.github_url,
             target_roles=target_roles,
+            techs=req.techs or [],
             preferences=prefs.model_dump() if prefs else None,
             result=result_dict,
         )

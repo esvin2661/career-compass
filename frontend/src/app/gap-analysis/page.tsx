@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+
+export const dynamic = 'force-dynamic';
 
 interface Skill {
   skill_id: string;
@@ -24,78 +25,46 @@ interface JobDescription {
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export default function GapAnalysisPage() {
-  const searchParams = useSearchParams();
-  const role = searchParams.get("role") || "Software Engineer";
+  const [role, setRole] = useState("Software Engineer");
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const r = params.get("role");
+    if (r) setRole(r);
+  }, []);
   const [jobDescriptions, setJobDescriptions] = useState<JobDescription[]>([]);
   const [selectedJob, setSelectedJob] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // For demo purposes, generate sample job descriptions
-    // In a real app, this would compare against actual job postings
-    const sampleJobs: JobDescription[] = [
-      {
-        id: "1",
-        title: "Senior Software Engineer",
-        company: "TechCorp",
-        match_score: 78,
-        matched_skills: [
-          { skill_id: "python", label: "Python", confidence: 0.9, source: "keyword" },
-          { skill_id: "javascript", label: "JavaScript", confidence: 0.8, source: "keyword" },
-          { skill_id: "react", label: "React", confidence: 0.7, source: "keyword" }
-        ],
-        missing_skills: [
-          { skill_id: "kubernetes", label: "Kubernetes", confidence: 0, source: "required" },
-          { skill_id: "docker", label: "Docker", confidence: 0, source: "required" },
-          { skill_id: "aws", label: "AWS", confidence: 0, source: "required" }
-        ],
-        description: "Build scalable web applications using modern technologies...",
-        url: "https://example.com/job/1"
-      },
-      {
-        id: "2",
-        title: "Full Stack Developer",
-        company: "StartupXYZ",
-        match_score: 82,
-        matched_skills: [
-          { skill_id: "python", label: "Python", confidence: 0.9, source: "keyword" },
-          { skill_id: "javascript", label: "JavaScript", confidence: 0.8, source: "keyword" },
-          { skill_id: "react", label: "React", confidence: 0.7, source: "keyword" },
-          { skill_id: "nodejs", label: "Node.js", confidence: 0.6, source: "keyword" }
-        ],
-        missing_skills: [
-          { skill_id: "graphql", label: "GraphQL", confidence: 0, source: "preferred" },
-          { skill_id: "mongodb", label: "MongoDB", confidence: 0, source: "preferred" }
-        ],
-        description: "Develop end-to-end web solutions for our growing platform...",
-        url: "https://example.com/job/2"
-      },
-      {
-        id: "3",
-        title: "Software Engineer",
-        company: "BigTech Inc",
-        match_score: 65,
-        matched_skills: [
-          { skill_id: "python", label: "Python", confidence: 0.9, source: "keyword" }
-        ],
-        missing_skills: [
-          { skill_id: "java", label: "Java", confidence: 0, source: "required" },
-          { skill_id: "spring", label: "Spring Framework", confidence: 0, source: "required" },
-          { skill_id: "kubernetes", label: "Kubernetes", confidence: 0, source: "required" },
-          { skill_id: "aws", label: "AWS", confidence: 0, source: "required" },
-          { skill_id: "docker", label: "Docker", confidence: 0, source: "required" }
-        ],
-        description: "Join our engineering team to build distributed systems...",
-        url: "https://example.com/job/3"
-      }
-    ];
-
-    setJobDescriptions(sampleJobs);
+    // try load analysis from storage and compute job list
+    const stored = localStorage.getItem('lastAnalysis');
+    if (stored) {
+      try {
+        const data = JSON.parse(stored);
+        const roleRec = data.role_recommendations?.find((r: any) => r.display_name === role);
+        if (roleRec) {
+          // build description from missing skills
+          const sampleJobs: JobDescription[] = [
+            {
+              id: "1",
+              title: roleRec.display_name,
+              company: "Recommended Role",
+              match_score: roleRec.match_score,
+              matched_skills: roleRec.matched_skills,
+              missing_skills: roleRec.missing_core_skills.concat(roleRec.missing_optional_skills),
+              description: "Based on your profile, here are your gaps.",
+              url: "#"
+            }
+          ];
+          setJobDescriptions(sampleJobs);
+        }
+      } catch {}
+    }
+    // no fallback
     setLoading(false);
   }, [role]);
-
-  const selectedJobData = jobDescriptions.find(job => job.id === selectedJob);
 
   const getScoreColor = (score: number) => {
     if (score >= 80) return "text-teal";
@@ -103,22 +72,30 @@ export default function GapAnalysisPage() {
     return "text-muted";
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-paper flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin w-8 h-8 border-4 border-accent border-t-transparent rounded-full mx-auto mb-4"></div>
-          <p className="text-muted">Analyzing job market...</p>
-        </div>
-      </div>
-    );
-  }
+  const selectedJobData = jobDescriptions.find(job => job.id === selectedJob);
 
-  if (error) {
+  if (jobDescriptions.length === 0) {
     return (
       <div className="min-h-screen bg-paper flex items-center justify-center">
-        <div className="text-center text-red-600">
-          <p>Error: {error}</p>
+        <div className="text-center max-w-md">
+          <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" className="text-accent">
+              <path d="M9 19V6L21 3V16M9 19C9 20.1046 8.10457 21 7 21C5.89543 21 5 20.1046 5 19C5 17.8954 5.89543 17 7 17C8.10457 17 9 17.8954 9 19ZM9 19L21 16M21 16C21 17.1046 21.8954 18 23 18C24.1046 18 25 17.1046 25 16C25 14.8954 24.1046 14 23 14C21.8954 14 21 14.8954 21 16Z" stroke="currentColor" strokeWidth="2"/>
+            </svg>
+          </div>
+          <h2 className="font-display font-700 text-xl text-ink mb-2">No Gap Analysis Yet</h2>
+          <p className="text-muted text-sm mb-6">
+            Upload your resume and run an analysis to get a personalized gap analysis comparing your skills to job market requirements.
+          </p>
+          <a
+            href="/"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-white font-display font-600 rounded-lg hover:bg-accent-dim transition-colors"
+          >
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M9 1L11.5 7H17L12.5 10.5L14 17L9 13L4 17L5.5 10.5L1 7H6.5L9 1Z" fill="currentColor"/>
+            </svg>
+            Analyze My Profile
+          </a>
         </div>
       </div>
     );
